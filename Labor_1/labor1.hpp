@@ -1,0 +1,6 @@
+
+
+#ifndef PIC23_LABOR1_HPP
+#define PIC23_LABOR1_HPP
+
+#endif //PIC23_LABOR1_HPP
