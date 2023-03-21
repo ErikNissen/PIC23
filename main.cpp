@@ -23,3 +23,20 @@ int main(int argc, char *argv[]){
 
 	return 0;
 }
+
+
+//int l1(std::vector<std::string> &vecArgs) {
+//    double zahl;
+//    for (int i = 0; i < vecArgs.size(); i++) {
+//        if (vecArgs[i].find_first_of(",") != std::string::npos) {
+//            try {
+//                std::cout << "\na_2\n" << std::endl;
+//                std::replace(vecArgs[i].begin(), vecArgs[i].end(), ',', '.');
+//                zahl = stod(vecArgs[i]);
+//                std::cout << zahl << " (double) ";
+//            } catch (const std::exception e) {
+//                std::cout << "there was an error" << std::endl;
+//            }
+//        }
+//    }
+//}
