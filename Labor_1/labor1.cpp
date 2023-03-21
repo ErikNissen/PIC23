@@ -5,46 +5,8 @@
 #include <ctime>
 #include "labor1.hpp"
 
-
-// TODO: Fixen
-Alter berechneAlter(const Geburtsdatum &gebdat) {
-    Alter alter;
-
-    time_t jetzt{time(0)};
-    tm *ltm{localtime(&jetzt)};
-
-    int aktuellesJahr{1900 + ltm->tm_year};
-    int aktuellerMonat{1 + ltm->tm_mon};
-    int aktuellerTag{ltm->tm_mday};
-
-    alter.jahre = aktuellesJahr - gebdat.jahr;
-
-    if (aktuellerMonat < gebdat.monat || (aktuellerMonat == gebdat.monat &&
-                                          aktuellerTag < gebdat.tag)) {
-        alter.jahre--;
-    }
-
-    int tagImJahr = 365 * alter.jahre / 4 - alter.jahre / 100 + alter.jahre
-                                                                / 400;
-
-    std::array<int, 12> monate{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-
-    if (aktuellesJahr % 4 == 0 && (aktuellesJahr % 100 != 0 || aktuellesJahr
-                                                               % 400 == 0)) {
-        monate[1] = 29;
-    }
-
-    for (auto i{gebdat.monat - 1}; i < aktuellerMonat - 1; i++) {
-        tagImJahr += monate[i];
-    }
-
-    tagImJahr += aktuellerTag - gebdat.tag;
-
-    alter.tage = tagImJahr;
-    alter.stunden = alter.tage * 24;
-
-    return alter;
-}
+// Global Variable
+int placeholder;
 
 int fibonacci(int n) { // Aufgabe 3
     if (n <= 1) {
@@ -55,32 +17,15 @@ int fibonacci(int n) { // Aufgabe 3
 
 int labor1(std::vector<std::string> &vecArgs) {
     aufgabe_1(vecArgs);
-    double zahl, sinus;
-    int umgewandelt, counter{0};
+    int umgewandelt;
     for (int i = 0; i < vecArgs.size(); i++) {
-        // mit "." wird try block nicht aufgerufen!
-        if (vecArgs[i].find_first_of(",") != std::string::npos) {
+	    // Es ist zu beachten, dass als "Programm argument" Kommazahlen mit einem "." versehen werden
+        if (vecArgs[i].find_first_of(".") != std::string::npos) {
             try {
-                // Aufgabe 2 - String to double
-                std::cout << "\nAufgabe 2\n" << std::endl;
-                // Ersetze "," durch "." damit die Kommazahl richtig ausgegeben wird - ohne diesen Schritt gehen die nachkommastellen verloren!
-                std::replace(vecArgs[i].begin(), vecArgs[i].end(), ',', '.');
-                zahl = stod(vecArgs[i]); // gibt int aus??
-                std::cout << zahl << " (double) ";
+	            aufgabe_2(vecArgs[i]);
 
-                std::cout << "\nAufgabe 4\n" << std::endl;
-                // Aufgabe 4
-                sinus = sin(zahl);
+	            aufgabe_6(vecArgs, i);
 
-                // Aufgabe 5
-                std::cout << "\nAufgabe 5\n" << std::endl;
-                std::cout << "Wandle zahl von Aufgabe 2 um in einen Integer, zahl lautet aktuell: " << zahl << std::endl;
-                umgewandelt = static_cast<int>(zahl);
-                std::cout << "zahl wurde erfolgreich umgewandelt in: " << umgewandelt << std::endl;
-
-                // Aufgabe 6
-                std::cout << "\nAufgabe 6\n" << std::endl;
-                changeValueOfIntVector(vecArgs, umgewandelt, counter);
 
                 // Aufgabe 7
                 std::cout << "\nAufgabe 7\n" << std::endl;
@@ -89,15 +34,15 @@ int labor1(std::vector<std::string> &vecArgs) {
                 std::cout << vecArgs[i] << ", ";
             }
         } else {
-            try {
-                // Aufgabe 3
-                std::cout << "\nAufgabe 3\n" << std::endl;
-                int x{stoi(vecArgs[i])};
-                std::cout << std::endl << "Die Fibonacci-Zahl von " << x <<
-                          " ist " << fibonacci(x) << std::endl; // Hier muss was überarbeitet werden!
-            } catch (const std::exception e) {
-                std::cout << vecArgs[i] << ", ";
-            }
+//            try {
+//                // Aufgabe 3
+//                std::cout << "\nAufgabe 3\n" << std::endl;
+//                int x{stoi(vecArgs[i])};
+//                std::cout << std::endl << "Die Fibonacci-Zahl von " << x <<
+//                          " ist " << fibonacci(x) << std::endl; // Hier muss was überarbeitet werden!
+//            } catch (const std::exception e) {
+//                std::cout << vecArgs[i] << ", ";
+//            }
         }
     }
 
@@ -116,34 +61,69 @@ void aufgabe_1(std::vector<std::string> &vecArgs) {
     std::cout << std::endl;
 }
 
-void aufgabe_2(std::vector<std::string> &vecArgs) {
-
+// Aufgabe 2 - String to double
+void aufgabe_2(const std::string &vec) {
+	std::cout << "\nAufgabe 2" << std::endl;
+	double zahl = stod(vec);
+	std::cout << zahl << " (double) " << std::endl;
+	aufgabe_4(zahl);
+	aufgabe_5(zahl);
 }
 
-// Aufgabe 6 try - Rechung funktioniert und ergebnis wird in Vector
-// reingepackt, aber nicht an richtige position
-    int changeValueOfIntVector(std::vector<std::string> &vecArgs, int umgewandelt,
-                               int counter) {
-        umgewandelt += 42;
-        std::cout << " += 42 = " << umgewandelt << std::endl;
-        std::cout << "counter ist auf: " << counter << std::endl;
-        vecArgs[counter] = std::to_string(umgewandelt);
-        return 0;
-    }
+// Mathematische Berechung
+void aufgabe_4(double zahl){
+	double sinus;
+	std::cout << "\nAufgabe 4" << std::endl;
+	sinus = sin(zahl);
+	std::cout << "Sinus von " << zahl << " ist: " << sinus << std::endl;
+}
 
-    void aufgabe_9() {
+// Typumwandlung zu int
+void aufgabe_5(double zahl){
+	int umgewandelt;
+	std::cout << "\nAufgabe 5" << std::endl;
+	std::cout << "Wandle zahl von Aufgabe 2 um in einen Integer, zahl lautet aktuell: "
+	          << zahl<< std::endl;
+	umgewandelt = static_cast<int>(zahl);
+	std::cout << "zahl wurde erfolgreich umgewandelt und lautet: " << umgewandelt << std::endl;
 
-        // Aufgabe 9
-        std::vector<Person> personen{
-                Person{"Max", "Musterman",
-                       Geburtsdatum{1, 1, 1901},
-                       berechneAlter(Geburtsdatum{1, 1, 1901})}
-        };
+	// übergabe an Global Var für aufgabe_6
+	placeholder = umgewandelt;
+}
 
-        for (auto p: personen) {
-            std::cout << "Person" << std::endl;
-            std::cout << p.alter.jahre << std::endl;
-            std::cout << p.alter.tage << std::endl;
-            std::cout << p.alter.stunden << std::endl;
-        }
-    }
+// Ändern einer Ganzzahl im vector
+void aufgabe_6(std::vector<std::string> &vecArgs, const int i){
+	std::cout << "\nAufgabe 6" << std::endl;
+	std::cout << placeholder;
+	placeholder += 42;
+	std::cout << " += 42 = " << placeholder << std::endl;
+	vecArgs[i] = std::to_string(placeholder);
+	std::cout << "check vector vecArgs[i] = " << vecArgs[i] << std::endl;
+	if (vecArgs[i] == std::to_string(placeholder)){
+		std::cout << "Vector Erfolgreich bearbeiten!" << std::endl;
+	}else{
+		std::cout << "Etwas ist schiefgelaufen!" << std::endl;
+	}
+}
+
+void aufgabe_9() {
+	std::vector<Person> personen;
+	Person p1{
+			"Hans",
+			"Wurst",
+			std::tm{0},
+			Alter{0}
+	};
+	p1.setGebDat(1,1,2000);
+
+	// Aufgabe 13
+	p1.berechneAlter();
+	personen.emplace_back(p1);
+
+	// Aufgabe 15
+	for (auto p: personen) {
+		std::cout << "Person" << std::endl;
+		// Aufgabe 14 / 16 / 17 / 18
+		p.alter2Textform();
+	}
+}
