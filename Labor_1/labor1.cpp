@@ -7,6 +7,63 @@
 
 // Global Variable
 int placeholder;
+int a3{0};
+
+void Person::setGebDat( const int tag, const int monat, const int jahr ) {
+    geburtsdatum.tm_mday = tag;
+    geburtsdatum.tm_mon = monat - 1;
+    geburtsdatum.tm_year = jahr - 1900;
+}
+
+void Person::berechneAlter() {
+    auto geburtszeitpunkt{std::chrono::system_clock::from_time_t(std::mktime(&geburtsdatum))};
+    auto jetzt{std::chrono::system_clock::now()};
+    auto age{static_cast<int>(std::chrono::duration_cast<std::chrono::hours>(jetzt -
+                                                                             geburtszeitpunkt).count())};
+
+    alter.jahre = age / 8760;
+    alter.tage = (age % 8760) / 24;
+    alter.stunden = age % 24;
+}
+
+void Person::alter2Textform() const {
+    std::string text;
+    const std::array<std::string, 10> hunderte{
+            "hundert", "Ein", "Zwei", "Drei", "Vier", "Fünf",
+            "Sechs", "Sieben", "Acht", "Neun"
+    };
+    const std::array<std::string, 10> zehner{
+            "zig", "Zehn", "Zwan", "Dreißig", "Vier",
+            "Fünf", "Sech", "Sieb", "Acht", "Neun"
+    };
+    const std::array<std::string, 10> einer{
+            "Null", "Eins", "Zwei", "Drei", "Vier",
+            "Fünf", "Sechs", "Sieben", "Acht", "Neun"
+    };
+    const int h{alter.jahre / 100};
+    const int z{ ( alter.jahre % 100 ) / 10 };
+    const int e{ alter.jahre % 10 };
+
+    if(h > 0)
+        text += hunderte[0] + hunderte[h];
+    if(e > 0)
+        text += einer[e];
+    if(z > 0)
+        if(z == 1)
+            if (h == 0)
+                text += zehner[1];
+            else
+                int sbgid{35};
+//                text += lower(zehner[1]);
+        else
+            text += "und";
+    for(const auto &ch : zehner[z])
+        text += std::tolower(static_cast<int>(ch));
+    text += zehner[0];
+
+
+    std::cout << "Person ist " << text << " Jahre alt." << std::endl;
+}
 
 int fibonacci(int n) { // Aufgabe 3
     if (n <= 1) {
@@ -20,33 +77,21 @@ int labor1(std::vector<std::string> &vecArgs) {
     int umgewandelt;
     for (int i = 0; i < vecArgs.size(); i++) {
         // Es ist zu beachten, dass als "Programm argument" Kommazahlen mit einem "." versehen werden
-        if (vecArgs[i].find_first_of(".") != std::string::npos) {
+        if (vecArgs[i].find_first_of('.') != std::string::npos) {
             try {
                 aufgabe_2(vecArgs[i]);
 
                 aufgabe_6(vecArgs, i);
 
-
-                // Aufgabe 7
-                std::cout << "\nAufgabe 7\n" << std::endl;
-                std::cout << std::hex << umgewandelt << " (HEX), " << std::dec;
-            } catch (const std::exception e) {
+            } catch (const std::exception &e) {
                 std::cout << vecArgs[i] << ", ";
             }
         } else {
-//            try {
-//                // Aufgabe 3
-//                std::cout << "\nAufgabe 3\n" << std::endl;
-//                int x{stoi(vecArgs[i])};
-//                std::cout << std::endl << "Die Fibonacci-Zahl von " << x <<
-//                          " ist " << fibonacci(x) << std::endl; // Hier muss was überarbeitet werden!
-//            } catch (const std::exception e) {
-//                std::cout << vecArgs[i] << ", ";
-//            }
+            if(a3 == 0) {
+                aufgabe_3( vecArgs );
+            }
         }
     }
-
-
     aufgabe_9();
 
     return 0;
@@ -55,7 +100,7 @@ int labor1(std::vector<std::string> &vecArgs) {
 void aufgabe_1(std::vector<std::string> &vecArgs) {
     // Aufgabe 1 Labor 1: alle argv Elemente im Vecotr werden mit cout ausgegeben.
     std::cout << "Aufgabe 1:\nDie Elemente im Vector sind: ";
-    for (auto i: vecArgs) { // check if this is correct
+    for (const auto &i: vecArgs) { // check if this is correct
         std::cout << i << ", ";
     }
     std::cout << std::endl;
@@ -68,6 +113,22 @@ void aufgabe_2(const std::string &vec) {
     std::cout << zahl << " (double) " << std::endl;
     aufgabe_4(zahl);
     aufgabe_5(zahl);
+}
+
+// Aufgabe 3 - Weitere Funktionälitäten: Berechen Fibonachi
+void aufgabe_3(std::vector<std::string> &vecArgs) {
+    std::cout << "\nAufgabe 3";
+    for (int i = 0; i < vecArgs.size(); i++) {
+        try {
+            int x{stoi(vecArgs[i])};
+            std::cout << std::endl << "Die Fibonacci-Zahl von " << x <<
+                      " ist " << fibonacci(x);
+        } catch (const std::exception e) {
+            std::cout << "\nFibonacci kann nicht Berechnet werden! Grund ist das '" << vecArgs[i] << "' keine Zahl ist.";
+        }
+    }
+    std::cout << std::endl;
+    a3++;
 }
 
 // Mathematische Berechung
@@ -100,10 +161,16 @@ void aufgabe_6(std::vector<std::string> &vecArgs, const int i){
     vecArgs[i] = std::to_string(placeholder);
     std::cout << "check vector vecArgs[i] = " << vecArgs[i] << std::endl;
     if (vecArgs[i] == std::to_string(placeholder)){
-        std::cout << "Vector Erfolgreich bearbeiten!" << std::endl;
+        std::cout << "Vector wurde Erfolgreich bearbeiten!" << std::endl;
+        aufgabe_7();
     }else{
         std::cout << "Etwas ist schiefgelaufen!" << std::endl;
     }
+}
+
+void aufgabe_7(){
+    std::cout << "\nAufgabe 7" << std::endl;
+    std::cout << std::hex << placeholder << " (HEX), " << std::dec << std::endl;
 }
 
 void aufgabe_9() {

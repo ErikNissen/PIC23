@@ -3,40 +3,40 @@
 #include <array>
 #include <string>
 
-
 #include "Labor_1/labor1.hpp"
 
+int main(int argc, char *argv[]) {
+    int lab {-1};
+    while (lab != 0) {
+// Eingabe
+        std::cout << "Welche Labor Aufgaben sollen angezeigt werden?\n"
+                  << "0. Exit\n"
+                  << "1. Labor1\n"
+                  << "2. Labor2\n"
+                  << std::endl;
+        std::cin >> lab;
 
-int main(int argc, char *argv[]){
+// Switch
+        switch (lab) {
+            case 1: // Labor 1
+                // Aufgabe 1 - Vektor bekommt alle argv Elemente
+                std::vector<std::string> vecArgs;
 
-	// Aufgabe 1 Labor 1: Vektor bekommt alle argv Elemente
-	std::vector<std::string> vecArgs;
+                for (int i{1}; i < argc; i++) {
+                    vecArgs.emplace_back(argv[i]);
+                }
 
-	for(int i{1}; i<argc; i++)
-	{
-		vecArgs.emplace_back( argv[ i ] );
-	}
-
-	// Vector wird übergeben an die Function labor1 in labor1.cpp
-	labor1(vecArgs);
-
-
-	return 0;
+                // Vector wird übergeben an die Function labor1 in labor1.cpp
+                labor1(vecArgs);
+                break;
+            case 2: // Labor 2
+                std::cout << "Hier Gibt es noch Nichts!" << std::endl;
+                break;
+            default:
+                std::cout << "Eingabe konnte nicht verstanden werden, bitte "
+                             "versuchen Sie es erneut." << std::endl;
+                break;
+        }
+    }
+    return 0;
 }
-
-
-//int l1(std::vector<std::string> &vecArgs) {
-//    double zahl;
-//    for (int i = 0; i < vecArgs.size(); i++) {
-//        if (vecArgs[i].find_first_of(",") != std::string::npos) {
-//            try {
-//                std::cout << "\na_2\n" << std::endl;
-//                std::replace(vecArgs[i].begin(), vecArgs[i].end(), ',', '.');
-//                zahl = stod(vecArgs[i]);
-//                std::cout << zahl << " (double) ";
-//            } catch (const std::exception e) {
-//                std::cout << "there was an error" << std::endl;
-//            }
-//        }
-//    }
-//}
