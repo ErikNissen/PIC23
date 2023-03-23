@@ -4,6 +4,8 @@
 #define PIC23_GLOBALS_HPP
 
 #include <string>
+#include <sstream>
+#include <array>
 
 const unsigned char AE = static_cast<unsigned char>(142);
 const unsigned char ae = static_cast<unsigned char>(132);
@@ -13,8 +15,11 @@ const unsigned char UE = static_cast<unsigned char>(154);
 const unsigned char ue = static_cast<unsigned char>(129);
 const unsigned char ss = static_cast<unsigned char>(225);
 
+
 std::string lower(const std::string &str);
 
 std::string upper(const std::string &str);
+
+std::string strip(std::string &str);
 
 #endif //PIC23_GLOBALS_HPP

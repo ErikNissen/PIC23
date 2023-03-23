@@ -19,3 +19,16 @@ std::string upper(const std::string &str){
 	}
 	return tmp;
 }
+
+std::string strip(std::string &str){
+	while (str[str.length() - 1] == ' ' ){
+		str = str.substr(0, str.length() - 1);
+	}
+	while (str[0] == ' ' ){
+		str = str.substr(1, str.length() - 1);
+	}
+
+	return str;
+}
+
+

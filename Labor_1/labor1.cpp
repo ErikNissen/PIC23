@@ -11,70 +11,119 @@
 // Global Variable
 int placeholder;
 
-void Person::setGebDat( const int tag, const int monat, const int jahr ) {
-	geburtsdatum.tm_mday = tag;
-	geburtsdatum.tm_mon = monat - 1;
-	geburtsdatum.tm_year = jahr - 1900;
+Person setGebDat(Person &p, const int tag, const int monat, const int jahr ) {
+	p.geburtsdatum.tm_mday = tag;
+	p.geburtsdatum.tm_mon = monat - 1;
+	p.geburtsdatum.tm_year = jahr - 1900;
+	return p;
 }
 
 // Aufgabe 13
-void Person::berechneAlter() {
-	auto geburtszeitpunkt{std::chrono::system_clock::from_time_t(std::mktime(&geburtsdatum))};
+Person berechneAlter(Person &p) {
+	auto geburtszeitpunkt{std::chrono::system_clock::from_time_t(
+			std::mktime(&p.geburtsdatum))};
 	auto jetzt{std::chrono::system_clock::now()};
-	auto age{static_cast<int>(std::chrono::duration_cast<std::chrono::hours>(jetzt -
-	                                                                         geburtszeitpunkt).count())};
-	std::cout << "Berechne das Alter von Person: '" << vorname << " " <<
-	nachname << "' in Jahren, Tagen und Stunden: " << std::endl;
-	alter.jahre = age / 8760;
-	alter.tage = (age % 8760) / 24;
-	alter.stunden = age % 24;
-	std::cout << "Die Person ist: " << alter.jahre << " Jahre, " <<
-	alter.tage << " Tage und " << alter.stunden << " Stunden alt." << std::endl;
+	auto age{std::chrono::duration_cast<std::chrono::hours>
+	(jetzt - geburtszeitpunkt).count()};
+	std::cout << "Berechne das Alter von Person: '" << p.vorname << " " <<
+	p.nachname << "' in Jahren, Tagen und Stunden: " << std::endl;
+	auto jahre{age / 8766l};
+	auto tage{(age % 8766l) / 24l};
+	auto stunden{age % 24l};
+
+	p.alter = {jahre, tage, stunden};
+
+	std::cout << "Die Person ist: " << p.alter.jahre << " Jahre, " << p
+	.alter.tage << " Tage und " << p.alter.stunden << " Stunden alt." <<
+	std::endl;
+
+	return p;
 }
 
 // Aufgabe 14
-void Person::alter2Textform() const {
+void alter2Textform(Person &p) {
 	std::cout << "\nAufgabe 14" << std::endl;
+
+	auto alter{p.alter.jahre};
+
 	std::string text;
-	std::stringstream umlaut;
-	umlaut << "F" << ue << "nf";
-	const std::array<std::string, 10> hunderte{
-			"hundert", "Ein", "Zwei", "Drei", "Vier", umlaut.str(),
-			"Sechs", "Sieben", "Acht", "Neun"
-	};
-	umlaut.clear();
-	umlaut << "Drei" << ss << "ig";
-	const std::array<std::string, 10> zehner{
-			"zig", "Zehn", "Zwan", umlaut.str(), "Vier",
-			"Fünf", "Sech", "Sieb", "Acht", "Neun"
-	};
-	umlaut.clear();
-	umlaut << "F" << ue << "nf";
 	const std::array<std::string, 10> einer{
-			"Null", "Eins", "Zwei", "Drei", "Vier",
-			umlaut.str(), "Sechs", "Sieben", "Acht", "Neun"
+			"Eins", "Zwei", "Drei", "Vier",
+			"Fuenf", "Sechs", "Sieben", "Acht", "Neun"
 	};
-	umlaut.clear();
-	const int h{alter.jahre / 100};
-	const int z{ ( alter.jahre % 100 ) / 10 };
-	const int e{ alter.jahre % 10 };
+	const std::array<std::string, 10> hunderte{
+			"Hundert", einer[1]+"hundert",einer[2]+"hundert",
+			einer[3]+"hundert", einer[4]+"hundert", einer[5]+"hundert",
+			einer[6]+"hundert", einer[7]+"hundert", einer[8]+"hundert"
+	};
+	const std::array<std::string, 10> zehner{
+			"Zwanzig", einer[2]+"ssig", einer[3]+"zig",
+			einer[4]+"zig", einer[5]+"zig", einer[6]+"zig", einer[7]+"zig",
+			einer[8]+"zig"
+	};
+	const std::array<std::string, 10> teens{
+		"Zehn", "Elf", "Zwölf", einer[2]+"zehn", einer[3]+"zehn",
+		einer[4]+"zehn", "Sechzehn", "Siebzehn", einer[7]+"zehn",
+		einer[8]+"zehn"
+	};
 
-	if(h > 0)
-		text += hunderte[0] + hunderte[h];
-	if(e > 0)
-		text += einer[e];
-	if(z > 0)
-		if(z == 1)
-			if (h == 0)
-				text += zehner[1];
-			else
-				text += lower(zehner[1]);
-		else
-			text += "und";
-	text += lower(zehner[z]) + zehner[0];
+	if(alter == 0){
+		text = "Null";
+	}else if (alter < 10){
+		text = einer[alter];
+	}else if(alter < 20){
+		text = teens[alter - 10];
+	}else if (alter < 100){
+		auto z{alter/10};
+		auto e{alter%10};
+		if(e > 0){
+			text += einer[e-1] + "und";
+		}
+
+		text += lower(zehner[z - 2]);
+	}else if (alter < 1000){
+		auto h{alter/100};
+		auto z{(alter%100)/10};
+		auto e{alter % 10};
+
+		text += hunderte[h - 1];
+
+		if(z > 1){
+			text += lower(zehner[z - 2]);
+			if(e > 0){
+				text += einer[e] + "und";
+			}
+			text += zehner[z - 2];
+		}else{
+			if(e > 0){
+				text += teens[e];
+			}else{
+				text += lower(zehner[z - 1]);
+			}
+		}
+	}
 
 
-	std::cout << "Person ist " << text << " Jahre alt." << std::endl;
+	std::cout << "Person "<<p.vorname << " "<<p.nachname<<" ist ";
+
+	for (int i = 0; i < text.length(); i++) {
+		if (text[i] == 'u' && text[i + 1] == 'e') {
+			std::cout << ue;
+			i++;
+		}else if (text[i] == 'o' && text[i + 1] == 'e'){
+			std::cout << oe;
+			i++;
+		}else if(text[i] == 'a' && text[i + 1] == 'e'){
+			std::cout << ae;
+			i++;
+		}else if (text[i] == text[i + 1] && text[i + 1] == 's'){
+			std::cout << ss;
+			i++;
+		}else {
+			std::cout << text[i];
+		}
+	}
+	std::cout << " Jahre alt." << std::endl;
 }
 
 int fibonacci(int n) { // Aufgabe 3
@@ -187,27 +236,27 @@ void aufgabe_7(){
 // Erzeuge ein Vektor von Personen
 void aufgabe_9() {
 	std::cout << "\nAufgabe 9" << std::endl;
-	std::vector<Person> personen;
-	Person p1{
+	static std::vector<Person> personen;
+	static Person p1{
 			"Hans",
 			"Wurst",
-			std::tm{0},
-			Alter{0}
+			{0},
+			{0, 0, 0}
 	};
-	p1.setGebDat(1,1,2000);
-	std::cout << "Person Namens '" << p1.vorname
+	p1 = setGebDat(p1, 1,1,2000);
+	std::cout << "Person Namens '" << p1.vorname << " " << p1.nachname
 	<< "' wurde erfolgreich erstellt" << std::endl;
 
 	// Aufgabe 13
 	std::cout << "\nAufgabe 13" << std::endl;
-	p1.berechneAlter();
+	p1 = berechneAlter(p1);
 	personen.emplace_back(p1);
 
 	// Aufgabe 15
-	for (auto p: personen) {
-		std::cout << "Person" << std::endl;
+	for (auto &p: personen) {
+		std::cout << "\nAufgabenteil 15\nPerson" << std::endl;
 		// Aufgabe 14 / 16 / 17 / 18
-		p.alter2Textform();
+		alter2Textform(p);
 	}
 }
 
@@ -215,43 +264,42 @@ void aufgabe_10(const std::string &path){
 	std::cout << "\nAufgabe 10" << std::endl;
 	std::string content{ read( path ) };
 
-	std::vector<Person> daten;
+	static std::vector<Person> daten;
 
 	std::stringstream ss(content);
 	std::string line;
 
 
 	while( std::getline(ss, line)){
-		std::array<std::string, 5> tmp;
 		std::stringstream sa(line);
 		std::string token;
 		int counter{0};
+		static Person p;
+		p.geburtsdatum = {0};
+		p.alter = {0, 0, 0};
 		while ( std::getline(sa, token, ',') ){
-
+			token = strip(token);
 			if(token.find_first_of('.')!= std::string::npos){
 				std::stringstream sb(token);
 				std::string x;
 				while (( std::getline(sb, x, '.')) ){
-					tmp[counter] = x;
+					switch ( counter ) {
+						case 2: p.geburtsdatum.tm_mday = stoi(x); break;
+						case 3: p.geburtsdatum.tm_mon = stoi(x) - 1; break;
+						case 4: p.geburtsdatum.tm_year = stoi(x) - 1900; break;
+					}
 					counter++;
 				}
 			}else{
-				tmp[counter] = token;
+				switch ( counter ) {
+					case 0: p.vorname = token; break;
+					case 1: p.nachname = token; break;
+				}
 				counter++;
 			}
-		}
-		Person p{
-			tmp[0],
-			tmp[1]
 
-		};
-		//TODO: FIX
-		p.setGebDat(
-				stoi(tmp[2]),
-				stoi(tmp[3]),
-				stoi(tmp[4])
-				);
-		p.berechneAlter();
+		}
+		p = berechneAlter(p);
 		daten.emplace_back(p);
 	}
 
@@ -260,9 +308,9 @@ void aufgabe_10(const std::string &path){
 		std::cout<<"Nachname: "<<person.nachname<<std::endl;
 		std::cout<<"Geburtstag: ";
 		std::cout<<person.geburtsdatum.tm_mday<<".";
-		std::cout<<person.geburtsdatum.tm_mon<<".";
-		std::cout<<person.geburtsdatum.tm_year<<".";
-		person.alter2Textform();
+		std::cout<<person.geburtsdatum.tm_mon + 1<<".";
+		std::cout<<person.geburtsdatum.tm_year + 1900<<std::endl;
+		alter2Textform(person);
 		std::cout<<std::endl;
 	}
 }

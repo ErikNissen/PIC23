@@ -28,12 +28,12 @@ void aufgabe_10(const std::string &path);
 // 20 - Nutzen sie Referenzen bei Funktionsargumenten, wenn möglich!
 // 21 - Nutzen von “const”, wann immer möglich!
 // 22 - Deklarierung der öffentlichen Funktionen (d.h. die in main.cpp aufgerufenen) in der Datei labor1.hpp.
-
+using ll = long long;
 
 using Alter = struct{
-	int jahre;
-	int tage;
-	int stunden;
+	ll jahre;
+	ll tage;
+	ll stunden;
 };
 
 // Aufgabe 8
@@ -42,14 +42,14 @@ using Person = struct{
 	std::string nachname;
 	std::tm geburtsdatum;
 	Alter alter;
-
-	void setGebDat(int tag, int monat, int jahr);
-
-	// Aufgabe 13
-	void berechneAlter();
-
-	void alter2Textform() const;
 };
+
+Person setGebDat(Person &p, int tag, int monat, int jahr);
+
+// Aufgabe 13
+Person berechneAlter(Person &p);
+
+void alter2Textform(Person &p);
 
 #endif //PIC23_LABOR1_HPP
 
