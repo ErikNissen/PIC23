@@ -6,16 +6,16 @@
 #include <iostream>
 int labor1(std::vector<std::string>& vecArgs);
 
-void aufgabe_1(std::vector<std::string>& vecArgs);
-double aufgabe_2(std::vector<std::string>& vecArgs);
-void aufgabe_3(std::vector<std::string> &vecArgs);
-void aufgabe_4(double);
-void aufgabe_5(double);
-void aufgabe_6(std::vector<std::string>& vecArgs, int);
-void aufgabe_7();
+static void aufgabe_1(std::vector<std::string>& vecArgs);
+static double aufgabe_2(std::vector<std::string>& vecArgs);
+static void aufgabe_3(std::vector<std::string> &vecArgs);
+static void aufgabe_4(double);
+static void aufgabe_5(double);
+static void aufgabe_6(std::vector<std::string>& vecArgs, int);
+static void aufgabe_7();
 // 8 - Definition eines eigenen Datentyps “Person” als Sturktur
-void aufgabe_9();
-void aufgabe_10(const std::string &path);
+static void aufgabe_9();
+static void aufgabe_10(const std::string &path);
 // 11 - Abfangen von C++ Exceptions beim Einlesen der Datei (bspw. Datei nicht vorhanden).
 // 12 - Dateiname soll über argv vom Benutzer bestimmbar sein.
 // 13 -   lohnt nicht in eigene Funktion umzubauen
@@ -38,18 +38,18 @@ using Alter = struct{
 
 // Aufgabe 8
 using Person = struct{
-	std::string vorname;
-	std::string nachname;
-	std::tm geburtsdatum;
-	Alter alter;
+	std::string vorname{""};
+	std::string nachname{""};
+	std::tm geburtsdatum{0};
+	Alter alter{0,0,0};
 };
 
-Person setGebDat(Person &p, int tag, int monat, int jahr);
+static Person setGebDat(Person &p, int tag, int monat, int jahr);
 
 // Aufgabe 13
-Person berechneAlter(Person &p);
+static Person berechneAlter(Person &p);
 
-void alter2Textform(Person &p);
+static void alter2Textform(Person &p);
 
 #endif //PIC23_LABOR1_HPP
 

@@ -11,7 +11,9 @@
 // Global Variable
 int placeholder;
 
-Person setGebDat(Person &p, const int tag, const int monat, const int jahr ) {
+static Person setGebDat(Person &p, const int tag, const int monat, const int
+jahr
+) {
 	p.geburtsdatum.tm_mday = tag;
 	p.geburtsdatum.tm_mon = monat - 1;
 	p.geburtsdatum.tm_year = jahr - 1900;
@@ -19,14 +21,22 @@ Person setGebDat(Person &p, const int tag, const int monat, const int jahr ) {
 }
 
 // Aufgabe 13
-Person berechneAlter(Person &p) {
+static Person berechneAlter(Person &p) {
+	// Wandle Geburtstagsdatum in time_point um.
 	auto geburtszeitpunkt{std::chrono::system_clock::from_time_t(
 			std::mktime(&p.geburtsdatum))};
+
+	// Hole das heutige Datum & Uhrzeit
 	auto jetzt{std::chrono::system_clock::now()};
+
+	// Bilde die Differenz von jetzt & geburtszeitpunkt
 	auto age{std::chrono::duration_cast<std::chrono::hours>
 	(jetzt - geburtszeitpunkt).count()};
+
 	std::cout << "Berechne das Alter von Person: '" << p.vorname << " " <<
 	p.nachname << "' in Jahren, Tagen und Stunden: " << std::endl;
+
+	// Splitte age in Jahren, Tagen & Stunden auf.
 	auto jahre{age / 8766l};
 	auto tage{(age % 8766l) / 24l};
 	auto stunden{age % 24l};
@@ -41,10 +51,10 @@ Person berechneAlter(Person &p) {
 }
 
 // Aufgabe 14
-void alter2Textform(Person &p) {
+static void alter2Textform(Person &p) {
 	std::cout << "\nAufgabe 14" << std::endl;
 
-	auto alter{p.alter.jahre};
+	const auto alter{p.alter.jahre};
 
 	std::string text;
 	const std::array<std::string, 10> einer{
@@ -77,14 +87,25 @@ void alter2Textform(Person &p) {
 		auto z{alter/10};
 		auto e{alter%10};
 		if(e > 0){
-			text += einer[e-1] + "und";
+			if(e == 1){
+				// Entfehrne das 's' von "Eins"
+				text += einer[0].substr(0, einer[0].size()-1);
+			}else{
+				text += einer[e-1];
+			}
+			text += "und";
+		}
+		if(e == 0){
+			text += zehner[z - 2];
+		}else{
+			text += lower(zehner[z - 2]);
 		}
 
-		text += lower(zehner[z - 2]);
 	}else if (alter < 1000){
-		auto h{alter/100};
-		auto z{(alter%100)/10};
-		auto e{alter % 10};
+		// Teile das Alter in Hunderte, Zehner und Einer auf.
+		const auto h{alter/100};
+		const auto z{(alter%100)/10};
+		const auto e{alter % 10};
 
 		text += hunderte[h - 1];
 
@@ -106,7 +127,8 @@ void alter2Textform(Person &p) {
 
 	std::cout << "Person "<<p.vorname << " "<<p.nachname<<" ist ";
 
-	for (int i = 0; i < text.length(); i++) {
+	// Optional: Gebe umlaute korrekt aus.
+	for (int i{0}; i < text.length(); i++) {
 		if (text[i] == 'u' && text[i + 1] == 'e') {
 			std::cout << ue;
 			i++;
@@ -123,10 +145,10 @@ void alter2Textform(Person &p) {
 			std::cout << text[i];
 		}
 	}
-	std::cout << " Jahre alt." << std::endl;
+	std::cout << " (=" << alter <<") Jahre alt." << std::endl;
 }
 
-int fibonacci(int n) { // Aufgabe 3
+static int fibonacci(int n) { // Aufgabe 3
     if (n <= 1) {
         return n;
     }
@@ -135,7 +157,7 @@ int fibonacci(int n) { // Aufgabe 3
 
 int labor1(std::vector<std::string> &vecArgs) {
     aufgabe_1(vecArgs);
-	auto zahl{aufgabe_2(vecArgs)};
+	static const auto zahl{aufgabe_2(vecArgs)};
 	aufgabe_3( vecArgs );
 	aufgabe_4(zahl);
 	aufgabe_5(zahl);
@@ -143,8 +165,8 @@ int labor1(std::vector<std::string> &vecArgs) {
     aufgabe_9();
 
 	std::string personendaten;
-	for(auto arg: vecArgs){
-		if(arg.find_first_of('txt') != std::string::npos){
+	for(const auto& arg: vecArgs){
+		if(arg.find_first_of("txt") != std::string::npos){
 			personendaten = arg;
 		}
 	}
@@ -152,7 +174,7 @@ int labor1(std::vector<std::string> &vecArgs) {
     return 0;
 }
 
-void aufgabe_1(std::vector<std::string> &vecArgs) {
+static void aufgabe_1(std::vector<std::string> &vecArgs) {
     // Aufgabe 1 Labor 1: alle argv Elemente im Vecotr werden mit cout ausgegeben.
     std::cout << "Aufgabe 1:\nDie Elemente im Vector sind: ";
     for (const auto &i: vecArgs) { // check if this is correct
@@ -162,36 +184,37 @@ void aufgabe_1(std::vector<std::string> &vecArgs) {
 }
 
 // Aufgabe 2 - String to double
-double aufgabe_2(std::vector<std::string> &vecArgs) {
+static double aufgabe_2(std::vector<std::string> &vecArgs) {
 	std::cout << "\nAufgabe 2" << std::endl;
 	double zahl;
-	for (int i = 0; i < vecArgs.size(); i++)
-		if(vecArgs[i].find_first_of('.') != std::string::npos && vecArgs[i]
-		.find_first_of('txt') == std::string::npos){
+	for (const auto & vecArg : vecArgs)
+		if(vecArg.find_first_of('.') != std::string::npos && vecArg
+		.find_first_of("txt") == std::string::npos){
 
-			zahl = stod(vecArgs[i]);
+			zahl = stod(vecArg);
 			std::cout << zahl << " (double) " << std::endl;
 	}
 	return zahl;
 }
 
 // Aufgabe 3 - Weitere Funktionälitäten: Berechen Fibonachi
-void aufgabe_3(std::vector<std::string> &vecArgs) {
+static void aufgabe_3(std::vector<std::string> &vecArgs) {
 	std::cout << "\nAufgabe 3";
-	for (int i = 0; i < vecArgs.size(); i++) {
+	for (const auto & vecArg : vecArgs) {
 		try {
-			int x{stoi(vecArgs[i])};
+			int x{stoi(vecArg)};
 			std::cout << std::endl << "Die Fibonacci-Zahl von " << x <<
 			          " ist " << fibonacci(x);
-		} catch (const std::exception e) {
-			std::cout << "\nFibonacci kann nicht Berechnet werden! Grund ist das '" << vecArgs[i] << "' keine Zahl ist.";
+		} catch (const std::exception &e) {
+			std::cerr << e.what() << std::endl;
+			std::cout << "\nFibonacci kann nicht Berechnet werden! Grund ist das '" << vecArg << "' keine Zahl ist.";
 		}
 	}
 	std::cout << std::endl;
 }
 
 // Mathematische Berechung
-void aufgabe_4(double zahl){
+static void aufgabe_4(double zahl){
 	double sinus;
 	std::cout << "\nAufgabe 4" << std::endl;
 	sinus = sin(zahl);
@@ -199,7 +222,7 @@ void aufgabe_4(double zahl){
 }
 
 // Typumwandlung zu int
-void aufgabe_5(double zahl){
+static void aufgabe_5(double zahl){
 	int umgewandelt;
 	std::cout << "\nAufgabe 5" << std::endl;
 	std::cout << "Wandle zahl von Aufgabe 2 um in einen Integer, zahl lautet aktuell: "
@@ -212,7 +235,7 @@ void aufgabe_5(double zahl){
 }
 
 // Ändern einer Ganzzahl im vector
-void aufgabe_6(std::vector<std::string> &vecArgs, const int i){
+static void aufgabe_6(std::vector<std::string> &vecArgs, const int i){
 	std::cout << "\nAufgabe 6" << std::endl;
 	std::cout << placeholder;
 	placeholder += 42;
@@ -220,7 +243,7 @@ void aufgabe_6(std::vector<std::string> &vecArgs, const int i){
 	vecArgs[i] = std::to_string(placeholder);
 	std::cout << "check vector vecArgs[i] = " << vecArgs[i] << std::endl;
 	if (vecArgs[i] == std::to_string(placeholder)){
-		std::cout << "Vector wurde Erfolgreich bearbeiten!" << std::endl;
+		std::cout << "Vector wurde erfolgreich bearbeitet!" << std::endl;
 		aufgabe_7();
 	}else{
 		std::cout << "Etwas ist schiefgelaufen!" << std::endl;
@@ -228,13 +251,13 @@ void aufgabe_6(std::vector<std::string> &vecArgs, const int i){
 }
 
 // Gebe Ganzzahl in HEX an
-void aufgabe_7(){
+static void aufgabe_7(){
 	std::cout << "\nAufgabe 7" << std::endl;
 	std::cout << std::hex << placeholder << " (HEX), " << std::dec << std::endl;
 }
 
 // Erzeuge ein Vektor von Personen
-void aufgabe_9() {
+static void aufgabe_9() {
 	std::cout << "\nAufgabe 9" << std::endl;
 	static std::vector<Person> personen;
 	static Person p1{
@@ -260,33 +283,41 @@ void aufgabe_9() {
 	}
 }
 
-void aufgabe_10(const std::string &path){
+static void aufgabe_10(const std::string &path){
 	std::cout << "\nAufgabe 10" << std::endl;
-	std::string content{ read( path ) };
-
+	std::string content;
+	try {
+		content = read( path );
+	}catch (std::exception &e){
+		std::cerr << e.what() << std::endl;
+		exit(-1);
+	}
 	static std::vector<Person> daten;
 
-	std::stringstream ss(content);
-	std::string line;
+	static std::stringstream ss(content);
+	static std::string line;
 
 
 	while( std::getline(ss, line)){
-		std::stringstream sa(line);
-		std::string token;
-		int counter{0};
+		static std::stringstream sa(line);
+		static std::string token;
+		static int counter{0};
 		static Person p;
 		p.geburtsdatum = {0};
 		p.alter = {0, 0, 0};
 		while ( std::getline(sa, token, ',') ){
 			token = strip(token);
 			if(token.find_first_of('.')!= std::string::npos){
-				std::stringstream sb(token);
-				std::string x;
+				static std::stringstream sb(token);
+				static std::string x;
 				while (( std::getline(sb, x, '.')) ){
 					switch ( counter ) {
 						case 2: p.geburtsdatum.tm_mday = stoi(x); break;
 						case 3: p.geburtsdatum.tm_mon = stoi(x) - 1; break;
 						case 4: p.geburtsdatum.tm_year = stoi(x) - 1900; break;
+						default: std::cerr  << "Something went wrong."
+											<< std::endl;
+						break;
 					}
 					counter++;
 				}
@@ -294,6 +325,9 @@ void aufgabe_10(const std::string &path){
 				switch ( counter ) {
 					case 0: p.vorname = token; break;
 					case 1: p.nachname = token; break;
+					default: std::cerr  << "Something went wrong."
+										<< std::endl;
+					break;
 				}
 				counter++;
 			}

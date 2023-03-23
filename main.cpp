@@ -1,12 +1,10 @@
 #include <iostream>
 #include <vector>
-#include <array>
 #include <string>
-
-
 #include "Labor_1/labor1.hpp"
 
 int main(int argc, char *argv[]) {
+
 	int lab {-1};
 	while (lab != 0) {
 // Aufgabe 16 von Labor 1
@@ -14,11 +12,13 @@ int main(int argc, char *argv[]) {
 		          << "0. Exit\n"
 		          << "1. Labor1\n"
 		          << "2. Labor2\n"
-		          << std::endl;
-		std::cin >> lab;
+		          << "Eingabe: ";
+		std::cin >> std::ws >> lab;
 
 // Switch
 		switch (lab) {
+			case 0:
+				std::cout << "Beende."<<std::endl; break;
 			case 1: // Labor 1
 				// Aufgabe 1 - Vektor bekommt alle argv Elemente
 				static std::vector<std::string> vArgs;
