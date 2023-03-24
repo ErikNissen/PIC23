@@ -18,8 +18,8 @@ std::string read( const std::string& path ) {
 		return "";
 	}
 	return {
-			( std::istreambuf_iterator<char>( tmp ) ), // Lese Zeichen für
-			// Zeichen der Datei ein
+			( std::istreambuf_iterator<char>( tmp ) ), // Lese
+			// Zeichen für Zeichen der Datei ein
 			std::istreambuf_iterator<char>() // Endmarkierung
 	};
 }

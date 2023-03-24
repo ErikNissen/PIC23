@@ -6,6 +6,8 @@
 #include <iostream>
 int labor1(std::vector<std::string>& vecArgs);
 
+static void fragen();
+
 static void aufgabe_1(std::vector<std::string>& vecArgs);
 static double aufgabe_2(std::vector<std::string>& vecArgs);
 static void aufgabe_3(std::vector<std::string> &vecArgs);
@@ -16,7 +18,8 @@ static void aufgabe_7();
 // 8 - Definition eines eigenen Datentyps “Person” als Sturktur
 static void aufgabe_9();
 static void aufgabe_10(const std::string &path);
-// 11 - Abfangen von C++ Exceptions beim Einlesen der Datei (bspw. Datei nicht vorhanden).
+// 11 - Abfangen von C++ Exceptions beim Einlesen der Datei
+//      (bspw. Datei nicht vorhanden).
 // 12 - Dateiname soll über argv vom Benutzer bestimmbar sein.
 // 13 -   lohnt nicht in eigene Funktion umzubauen
 // 14 -   lohnt nicht in eigene Funktion umzubauen
@@ -27,7 +30,8 @@ static void aufgabe_10(const std::string &path);
 // 19 - einhalten C++11 Variable still "int a{5};"
 // 20 - Nutzen sie Referenzen bei Funktionsargumenten, wenn möglich!
 // 21 - Nutzen von “const”, wann immer möglich!
-// 22 - Deklarierung der öffentlichen Funktionen (d.h. die in main.cpp aufgerufenen) in der Datei labor1.hpp.
+// 22 - Deklarierung der öffentlichen Funktionen (d.h. die in main.cpp
+//      aufgerufenen) in der Datei labor1.hpp.
 using ll = long long;
 
 using Alter = struct{
