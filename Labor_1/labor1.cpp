@@ -171,13 +171,120 @@ int labor1(std::vector<std::string> &vecArgs) {
 		}
 	}
 	aufgabe_10(personendaten);
+
+	fragen();
     return 0;
 }
 
+static void fragen(){
+	using namespace std;
+
+	cout << GREEN << BOLD << endl << endl
+	     << "Frage 1: "
+	     << "Wann setze ich Pointer ein?"
+		 << endl << RESET;
+	cout << YELLOW << endl
+	     << "Antwort: "
+		 << endl
+	     << "- Wenn man die Lebensdauer eines Objektes kontrollieren möchte."
+		 << endl
+		 << "- Wenn man gr"<<oe<<"ßere Objekte übertragen will."
+		 << endl << RESET;
+
+	cout << GREEN << BOLD << endl << endl
+		 << "Frage 2: "
+	     << "Wann setze ich Referenzen ein?"
+	     << endl << RESET;
+	cout << YELLOW << endl
+		 << "Antwort: "
+	     << endl
+	     << "- Verwendung als Aliasname für ein bereits bestehendes Objekt."
+	     << endl << RESET;
+
+	cout << GREEN << BOLD << endl << endl
+		 << "Frage 3: "
+	     << "Was ist der Unterschied zwischen Pointern und Referenzen?"
+	     << endl << RESET;
+	cout << YELLOW << endl
+		 << "Antwort: "
+	     << endl
+		 << "- Eine Referenz muss immer initialisiert werden und zeigt immer "
+			"auf dasselbe Objekt."
+		 << endl
+		 << "- Ein Zeiger kann auf etwas anderes zeigen oder ein nullptr sein."
+		 << endl
+		 << "- Eine Referenz ist kein eigenständiges Objekt wie ein Zeiger, "
+			"sondern nur ein Aliasname für ein bereits bestehendes Objekt."
+		 << endl
+	     << "ein Pointer hat eine eigene Speicheradresse und eine Referenz hat "
+			"keine, da es eine vorhandene Variable ist."
+	     << endl << RESET;
+
+	cout << GREEN << BOLD << endl << endl
+		 << "Frage 4: "
+	     << "Wozu setzt man “const” ein?"
+	     << endl << RESET;
+	cout << YELLOW << endl
+		 << "Antwort: "
+	     << endl
+	     << "- Wenn eine Variable im nachgang nicht mehr ver"<<ae<<"ndert "
+			"werden soll."
+	     << endl << RESET;
+
+	cout << GREEN << BOLD << endl << endl
+		 << "Frage 5: "
+	     << "Was ist call-by-value und call-by-reference? Unterschiede und "
+			"Einsatzzwecke?"
+	     << endl << RESET;
+	cout << YELLOW << endl
+		 << "Antwort: "
+	     << endl
+	     << "- Bei call-by-value wird eine Kopie des Arguments an die Funktion "
+		 << ue<<"bergeben. "<<AE<<"nderungen an dem Argument innerhalb der "
+			"Funktion haben keine Auswirkungen auf das urspr"<<ue<<"ngliche "
+			"Argument au"<<ss<<"erhalb der Funktion."
+		 << endl
+		 << "- Wird verwendet, wenn die Funktion nur mit dem Wert des Arguments "
+			"arbeiten muss und keine Änderungen am ursprünglichen Argument "
+			"vorgenommen werden sollen."
+		 << endl
+		 << "- Call-by-reference "<<ue<<"bergibt eine Referenz auf das "
+			"Argument an die Funktion. "<<ae<<"nderungen an dem Argument "
+			"innerhalb der Funktion wirken sich direkt auf das urspr"<<ue
+		 << "ngliche Argument au"<<ss<<"erhalb der Funktion aus."
+	     << endl
+		 << "- Wird verwendet, wenn die Funktion "<<AE<<"nderungen am "
+			"urspr"<<ue<<"nglichen Argument vornehmen soll oder wenn das "
+		 << UE<<"bergeben einer Kopie des Arguments zu teuer w"<<ae<<"re (z"
+			".B. bei gro"<<ss<<"en Datenstrukturen)."
+		 << endl << RESET;
+
+
+	cout << GREEN << BOLD << endl << endl
+		 << "Frage 6: "
+	     << "Eine Funktionsdeklaration beinhaltet einen Pointer als Argument, "
+			"bspw. “void func(int *value);”. Inwiefern kann/muss der Aufruf "
+			"dieser Funktion als call-by-value aufgefasst werden?"
+	     << endl << RESET;
+	cout << YELLOW << endl
+		 << "Antwort: "
+		 << endl
+	     << "Wenn die Funktion aufgerufen wird, wird der Wert des Zeigers als "
+			"call-by-value an die Funktion "<<ue<<"bergeben. Das bedeutet, "
+			"dass innerhalb der Funktion eine Kopie des Zeigers erstellt wird "
+			"und "<<AE<<"nderungen an dem Zeiger selbst innerhalb der Funktion "
+			"keine Auswirkungen auf den urspr"<<ue<<"nglichen Zeiger außerhalb "
+			"der Funktion haben. Allerdings kann die Funktion den Wert "
+		 << ae<<"ndern, auf den der Zeiger zeigt (der int-Wert), da sie eine "
+				"Kopie der Adresse dieses Werts hat."
+	     << endl << RESET;
+}
+
 static void aufgabe_1(std::vector<std::string> &vecArgs) {
-    // Aufgabe 1 Labor 1: alle argv Elemente im Vecotr werden mit cout ausgegeben.
+    // Aufgabe 1 Labor 1: alle argv Elemente im Vecotr werden mit cout
+	// ausgegeben.
     std::cout << "Aufgabe 1:\nDie Elemente im Vector sind: ";
-    for (const auto &i: vecArgs) { // check if this is correct
+    for (auto &i: vecArgs) { // check if this is correct
         std::cout << i << ", ";
     }
     std::cout << std::endl;
@@ -187,7 +294,7 @@ static void aufgabe_1(std::vector<std::string> &vecArgs) {
 static double aufgabe_2(std::vector<std::string> &vecArgs) {
 	std::cout << "\nAufgabe 2" << std::endl;
 	double zahl;
-	for (const auto & vecArg : vecArgs)
+	for (auto & vecArg : vecArgs)
 		if(vecArg.find_first_of('.') != std::string::npos && vecArg
 		.find_first_of("txt") == std::string::npos){
 
@@ -200,14 +307,14 @@ static double aufgabe_2(std::vector<std::string> &vecArgs) {
 // Aufgabe 3 - Weitere Funktionälitäten: Berechen Fibonachi
 static void aufgabe_3(std::vector<std::string> &vecArgs) {
 	std::cout << "\nAufgabe 3";
-	for (const auto & vecArg : vecArgs) {
+	for (auto & vecArg : vecArgs) {
 		try {
 			int x{stoi(vecArg)};
 			std::cout << std::endl << "Die Fibonacci-Zahl von " << x <<
 			          " ist " << fibonacci(x);
 		} catch (const std::exception &e) {
-			std::cerr << e.what() << std::endl;
-			std::cout << "\nFibonacci kann nicht Berechnet werden! Grund ist das '" << vecArg << "' keine Zahl ist.";
+			std::cout << "\nFibonacci kann nicht Berechnet werden! Grund ist "
+						 "das '" << vecArg << "' keine Zahl ist.";
 		}
 	}
 	std::cout << std::endl;
@@ -224,11 +331,12 @@ static void aufgabe_4(double zahl){
 // Typumwandlung zu int
 static void aufgabe_5(double zahl){
 	int umgewandelt;
-	std::cout << "\nAufgabe 5" << std::endl;
-	std::cout << "Wandle zahl von Aufgabe 2 um in einen Integer, zahl lautet aktuell: "
-	          << zahl<< std::endl;
+	std::cout   << "\nAufgabe 5" << std::endl;
+	std::cout   << "Wandle zahl von Aufgabe 2 um in einen Integer, zahl "
+				   "lautet aktuell: " << zahl<< std::endl;
 	umgewandelt = static_cast<int>(zahl);
-	std::cout << "zahl wurde erfolgreich umgewandelt und lautet: " << umgewandelt << std::endl;
+	std::cout   << "zahl wurde erfolgreich umgewandelt und lautet: "
+				<< umgewandelt << std::endl;
 
 	// übergabe an Global Var für aufgabe 6 und 7
 	placeholder = umgewandelt;
@@ -299,17 +407,17 @@ static void aufgabe_10(const std::string &path){
 
 
 	while( std::getline(ss, line)){
-		static std::stringstream sa(line);
-		static std::string token;
-		static int counter{0};
-		static Person p;
+		std::stringstream sa(line);
+		std::string token;
+		int counter{0};
+		Person p;
 		p.geburtsdatum = {0};
 		p.alter = {0, 0, 0};
 		while ( std::getline(sa, token, ',') ){
 			token = strip(token);
 			if(token.find_first_of('.')!= std::string::npos){
-				static std::stringstream sb(token);
-				static std::string x;
+				std::stringstream sb(token);
+				std::string x;
 				while (( std::getline(sb, x, '.')) ){
 					switch ( counter ) {
 						case 2: p.geburtsdatum.tm_mday = stoi(x); break;
@@ -343,7 +451,7 @@ static void aufgabe_10(const std::string &path){
 		std::cout<<"Geburtstag: ";
 		std::cout<<person.geburtsdatum.tm_mday<<".";
 		std::cout<<person.geburtsdatum.tm_mon + 1<<".";
-		std::cout<<person.geburtsdatum.tm_year + 1900<<std::endl;
+		std::cout<<person.geburtsdatum.tm_year + 1900 <<std::endl;
 		alter2Textform(person);
 		std::cout<<std::endl;
 	}
