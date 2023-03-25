@@ -56,4 +56,3 @@ static Person berechneAlter(Person &p);
 static void alter2Textform(Person &p);
 
 #endif //PIC23_LABOR1_HPP
-

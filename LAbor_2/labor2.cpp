@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "labor2.hpp"
-#include "Teil_A/lab2a.hpp"
+#include "Teil_A/lap2a.hpp"
 #include "Teil_B/lab2b.hpp"
 
 int lab2Main(){
@@ -30,4 +30,5 @@ int lab2Main(){
 				break;
 		}
 	}
+    return 0;
 }
