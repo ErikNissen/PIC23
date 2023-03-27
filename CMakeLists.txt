@@ -11,4 +11,4 @@ add_executable(PIC23
         LAbor_2/labor2.cpp
         Labor_2/Teil_A/lap2a.cpp
         LAbor_2/Teil_B/lab2b.cpp
-        )
+        Labor_2/Teil_A/trash.cpp)
