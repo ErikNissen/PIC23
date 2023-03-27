@@ -1,7 +1,7 @@
-
-
 #ifndef PIC23_DATEIVERWALTUNG_HPP
 #define PIC23_DATEIVERWALTUNG_HPP
+
+#pragma once
 
 #include <string>
 #include <fstream>

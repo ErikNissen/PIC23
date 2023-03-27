@@ -2,10 +2,10 @@
 #include <vector>
 #include <string>
 #include "Labor_1/labor1.hpp"
-#include "LAbor_2/labor2.hpp"
+#include "Labor_2/labor2.hpp"
+#include "dishlib.hpp"
 
 int main(int argc, char *argv[]) {
-
 	int lab {-1};
 	while (lab != 0) {
 // Aufgabe 16 von Labor 1

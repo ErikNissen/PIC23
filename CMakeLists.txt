@@ -6,9 +6,16 @@ set(CMAKE_CXX_STANDARD 20)
 add_executable(PIC23
         main.cpp
         Labor_1/labor1.cpp
-        Labor_1/globals.cpp
+        globals.cpp
         Labor_1/dateiverwaltung.cpp
-        LAbor_2/labor2.cpp
+        Labor_2/labor2.cpp
         Labor_2/Teil_A/lap2a.cpp
-        LAbor_2/Teil_B/lab2b.cpp
-        Labor_2/Teil_A/trash.cpp)
+        Labor_2/dishlib/dishlib.cpp
+        )
+
+#Lab2 Teil B Aufgabe 1
+add_subdirectory(Labor_2)
+target_include_directories(PIC23 PUBLIC Labor_2)
+target_link_libraries(PIC23
+        dishlib
+        )

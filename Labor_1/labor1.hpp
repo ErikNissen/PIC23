@@ -1,7 +1,8 @@
-
-
 #ifndef PIC23_LABOR1_HPP
 #define PIC23_LABOR1_HPP
+
+#pragma once
+
 #include <chrono>
 #include <iostream>
 int labor1(std::vector<std::string>& vecArgs);

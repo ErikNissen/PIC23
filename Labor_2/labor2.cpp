@@ -2,7 +2,7 @@
 
 #include "labor2.hpp"
 #include "Teil_A/lap2a.hpp"
-#include "Teil_B/lab2b.hpp"
+#include "dishlib.hpp"
 
 int lab2Main(){
 	static int choice{-1};

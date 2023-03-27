@@ -5,7 +5,7 @@
 #include <ctime>
 #include <filesystem>
 #include "labor1.hpp"
-#include "globals.hpp"
+#include "../globals.hpp"
 #include "dateiverwaltung.hpp"
 
 // Global Variable

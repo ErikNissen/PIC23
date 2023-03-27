@@ -1,6 +1,8 @@
 #ifndef PIC23_LAP2A_HPP
 #define PIC23_LAP2A_HPP
 
+#pragma once
+
 int lab2AMain();
 
 class A {
@@ -14,8 +16,11 @@ public:
     // Copy assignment
     A& operator=(A const &); // Teil 4
 
-    // Move
-    A(A &&); // Teil 3
+	// Move
+	A(A &&); // Teil 3
+
+	// Move assignment
+	A& operator=(A &&); // Teil 5
 
 	// Destruktor
 	~A(); // Teil 1

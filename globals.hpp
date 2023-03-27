@@ -1,7 +1,7 @@
-
-
 #ifndef PIC23_GLOBALS_HPP
 #define PIC23_GLOBALS_HPP
+
+#pragma once
 
 #include <string>
 #include <sstream>
