@@ -18,7 +18,7 @@ static void aufgabe_6(std::vector<std::string>& vecArgs, int);
 static void aufgabe_7();
 // 8 - Definition eines eigenen Datentyps “Person” als Sturktur
 static void aufgabe_9();
-static void aufgabe_10(const std::string &path);
+static void aufgabe_10(std::string &path);
 // 11 - Abfangen von C++ Exceptions beim Einlesen der Datei
 //      (bspw. Datei nicht vorhanden).
 // 12 - Dateiname soll über argv vom Benutzer bestimmbar sein.

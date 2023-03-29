@@ -66,7 +66,7 @@ int dish(){
 	}
 
 	/// Aufgabe 12
-	std::vector<Kunde> kunden; // Vektor mit Kunden erzeugen
+	std::vector<Kunde> kunden; // Vektor für Kunden
 
 	std::array<std::string, 6> namen{ // Die Kunden für den Vektor
 		"Hannes Mueller",
@@ -85,7 +85,11 @@ int dish(){
 	/// Aufgabe 13
 	for(auto &kunde : kunden){ // Jeder Kunde erhält ein dish
 		// Erzeuge ein zufälligen Index
-		auto index{ randomNumber(0, vDishes.size() - 1)};
+		ull index{ randomNumber(0, vDishes.size() - 1)};
+		if(index > vDishes.size() - 1){
+			std::cout << "Keine Gerichte mehr verfügbar." << std::endl;
+			break;
+		}
 
 		// Serviere das Gericht dem Kunden
 		kunde->ServeDish( std::move(vDishes[index]));

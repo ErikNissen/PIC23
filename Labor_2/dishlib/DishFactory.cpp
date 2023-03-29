@@ -3,15 +3,20 @@
 auto getInput(){
 	std::vector<std::tuple<std::string, unsigned int>> _zutaten;
 	std::cout << "Bitte geben Sie die Zutaten"
-				 " ein und beenden Sie mit Enter\n(z.B.: 2 Apfel, 3 Zwiebel)"
+				 " ein und beenden Sie mit dem Wort 'e e'\n(z.B.: 2 "
+				 "Apfel, 3 "
+				 "Zwiebel)"
 				 << std::endl;
+	bool running{true};
+	while ( running ){
 
-	while ( true ){
 		std::cout << _zutaten.size() + 1 << ". ";
 		std::string zutat, anzahl;
 		while (true) {
 			std::cin >> anzahl >> zutat;
-			if(anzahl.empty() and zutat.empty()){
+
+			if(zutat == "e" or anzahl == "e"){
+				running = false;
 				break;
 			}
 			try {
@@ -30,17 +35,17 @@ auto getInput(){
 	}
 
 	std::cout << "Bitte geben Sie die Zubereitungsschritte "
-	             " an und beenden Sie mit Enter"
+	             " an und beenden Sie 'e'"
 	          << std::endl;
 
 	std::vector<std::string> _schritte;
-
-	while ( true ){
+	running = true;
+	while ( running ){
 		std::cout << _schritte.size() + 1 << ". ";
 		static std::string tmp;
-		std::cout << tmp;
 		std::cin >> std::ws >> tmp;
-		if(tmp.empty()){
+		if(tmp == "e"){
+			running = false;
 			break;
 		}else{
 			_schritte.emplace_back(tmp);

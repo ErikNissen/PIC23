@@ -186,9 +186,10 @@ static void fragen(){
 	cout << YELLOW << endl
 	     << "Antwort: "
 		 << endl
-	     << "- Wenn man die Lebensdauer eines Objektes kontrollieren möchte."
+	     << "- Wenn man die Lebensdauer eines Objektes kontrollieren "
+			"m"<<oe<<"chte."
 		 << endl
-		 << "- Wenn man gr"<<oe<<"ßere Objekte übertragen will."
+		 << "- Wenn man gr"<<oe<<ss<<"ere Objekte "<<ue<<"bertragen will."
 		 << endl << RESET;
 
 	cout << GREEN << BOLD << endl << endl
@@ -198,7 +199,7 @@ static void fragen(){
 	cout << YELLOW << endl
 		 << "Antwort: "
 	     << endl
-	     << "- Verwendung als Aliasname für ein bereits bestehendes Objekt."
+	     << "- Verwendung als Aliasname f"<<ue<<"r ein bereits bestehendes Objekt."
 	     << endl << RESET;
 
 	cout << GREEN << BOLD << endl << endl
@@ -209,20 +210,20 @@ static void fragen(){
 		 << "Antwort: "
 	     << endl
 		 << "- Eine Referenz muss immer initialisiert werden und zeigt immer "
-			"auf dasselbe Objekt."
+			"auf dasselbe \nObjekt.\n"
+		    "- Ein Zeiger kann auf etwas anderes zeigen oder ein nullptr sein."
 		 << endl
-		 << "- Ein Zeiger kann auf etwas anderes zeigen oder ein nullptr sein."
-		 << endl
-		 << "- Eine Referenz ist kein eigenständiges Objekt wie ein Zeiger, "
-			"sondern nur ein Aliasname für ein bereits bestehendes Objekt."
-		 << endl
+		 << "- Eine Referenz ist kein eigenst"<<ae<<"ndiges Objekt wie ein "
+				"Zeiger, sondern nur ein Aliasname f"<<ue<<"r ein bereits "
+														   "bestehendes "
+														   "\nObjekt."
 	     << "ein Pointer hat eine eigene Speicheradresse und eine Referenz hat "
 			"keine, da es eine vorhandene Variable ist."
 	     << endl << RESET;
 
 	cout << GREEN << BOLD << endl << endl
 		 << "Frage 4: "
-	     << "Wozu setzt man “const” ein?"
+	     << "Wozu setzt man \"const\" ein?"
 	     << endl << RESET;
 	cout << YELLOW << endl
 		 << "Antwort: "
@@ -239,14 +240,15 @@ static void fragen(){
 	cout << YELLOW << endl
 		 << "Antwort: "
 	     << endl
-	     << "- Bei call-by-value wird eine Kopie des Arguments an die Funktion "
+	     << "- Bei call-by-value wird eine Kopie des Arguments an die "
+			"\nFunktion "
 		 << ue<<"bergeben. "<<AE<<"nderungen an dem Argument innerhalb der "
 			"Funktion haben keine Auswirkungen auf das urspr"<<ue<<"ngliche "
 			"Argument au"<<ss<<"erhalb der Funktion."
 		 << endl
 		 << "- Wird verwendet, wenn die Funktion nur mit dem Wert des Arguments "
-			"arbeiten muss und keine Änderungen am ursprünglichen Argument "
-			"vorgenommen werden sollen."
+			"arbeiten muss und keine "<<AE<<"nderungen am urspr"<<ue<<"nglichen "
+			"Argument vorgenommen werden sollen."
 		 << endl
 		 << "- Call-by-reference "<<ue<<"bergibt eine Referenz auf das "
 			"Argument an die Funktion. "<<ae<<"nderungen an dem Argument "
@@ -255,7 +257,7 @@ static void fragen(){
 	     << endl
 		 << "- Wird verwendet, wenn die Funktion "<<AE<<"nderungen am "
 			"urspr"<<ue<<"nglichen Argument vornehmen soll oder wenn das "
-		 << UE<<"bergeben einer Kopie des Arguments zu teuer w"<<ae<<"re (z"
+		 << UE<<"bergeben einer \nKopie des Arguments zu teuer w"<<ae<<"re (z"
 			".B. bei gro"<<ss<<"en Datenstrukturen)."
 		 << endl << RESET;
 
@@ -272,8 +274,9 @@ static void fragen(){
 	     << "Wenn die Funktion aufgerufen wird, wird der Wert des Zeigers als "
 			"call-by-value an die Funktion "<<ue<<"bergeben. Das bedeutet, "
 			"dass innerhalb der Funktion eine Kopie des Zeigers erstellt wird "
-			"und "<<AE<<"nderungen an dem Zeiger selbst innerhalb der Funktion "
-			"keine Auswirkungen auf den urspr"<<ue<<"nglichen Zeiger außerhalb "
+			"und "<<AE<<"nderungen an dem Zeiger selbst innerhalb der "
+						"\nFunktion "
+			"keine Auswirkungen auf den urspr"<<ue<<"nglichen Zeiger au"<<ss<<"erhalb "
 			"der Funktion haben. Allerdings kann die Funktion den Wert "
 		 << ae<<"ndern, auf den der Zeiger zeigt (der int-Wert), da sie eine "
 				"Kopie der Adresse dieses Werts hat."
@@ -391,14 +394,26 @@ static void aufgabe_9() {
 	}
 }
 
-static void aufgabe_10(const std::string &path){
+static void aufgabe_10(std::string &path){
 	std::cout << "\nAufgabe 10" << std::endl;
 	std::string content;
-	try {
-		content = read( path );
-	}catch (std::exception &e){
-		std::cerr << e.what() << std::endl;
-		exit(-1);
+	while(true) {
+		try {
+			content = read( path );
+			break;
+
+		} catch ( std::exception &e ) {
+			std::cerr << e.what() << std::endl;
+			std::cout << "Programm [b]eenden oder [P]fad ändern?" << std::endl;
+			static std::string tmp;
+
+			std::cin >> std::ws >> tmp;
+			if( lower(tmp) == "b"){
+				exit(0);
+			}else if(lower(tmp) == "p"){
+				path = tmp;
+			}
+		}
 	}
 	static std::vector<Person> daten;
 
