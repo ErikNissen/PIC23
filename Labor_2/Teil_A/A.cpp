@@ -1,49 +1,42 @@
 #include <iostream>
 #include <vector>
 #include <array>
-#include "lap2a.hpp"
+#include "A.hpp"
 #include "../globals.hpp"
 
-int lab2AMain(){
-// Teil 1
-	{
-		std::cout << "\nTeil 1 : " << std::endl;
-		A a1{3};
-	}
-// Teil 2
-	{
-		std::cout << "\nTeil 2 : " << std::endl;
-		A a1{3};
-		A a2{a1};
-		A a3{A{4}};
-	}
-// Teil 3
-	{
-		std::cout << "\nTeil 3 : " << std::endl;
-		std::vector<A> v;
-		v.emplace_back(A{5});
-	}
-// Teil 4
-	{
-		std::cout << "\nTeil 4 : " << std::endl;
-		A a5{7};
-		A a6{8};
-		a6 = a5;
-	}
-// Teil 5
-	{
-		std::cout << "\nTeil 5 : " << std::endl;
-		A a7(9);
-		a7 = A(10);
-	}
-// Teil 6
-	{
-		using namespace std;
-		std::cout << "\nTeil 6 : " << std::endl;
-		A a8{11};
-		A a9{move(a8)};
-	}
-// Fragen beantworten
+void a_1(){ // Teil 1
+	std::cout << "\nTeil 1: " << std::endl;
+	A a1{3};
+}
+void a_2(){ // Teil 2
+	std::cout << "\nTeil 2: " << std::endl;
+	A a1{3};
+	A a2{a1};
+	A a3{A{4}};
+}
+void a_3(){ // Teil 3
+	std::cout << "\nTeil 3: " << std::endl;
+	std::vector<A> v;
+	v.emplace_back(A{5});
+}
+void a_4(){ // Teil 4
+	std::cout << "\nTeil 4: " << std::endl;
+	A a5{7};
+	A a6{8};
+	a6 = a5;
+}
+void a_5(){ // Teil 5
+	std::cout << "\nTeil 5: " << std::endl;
+	A a7(9);
+	a7 = A(10);
+}
+void a_6(){ // Teil 6
+	using namespace std;
+	std::cout << "\nTeil 6: " << std::endl;
+	A a8{11};
+	A a9{move(a8)};
+}
+void a_Fragen(){ // Fragen beantworten
 	{
 		std::cout << "\nFragen beantworten: " << std::endl;
 
@@ -65,6 +58,26 @@ int lab2AMain(){
 		          << "In A.2 wird f" << ue << "r a3 der wert \"A{4}\" zugewiesen, es wird also die Klasse Aufgerufen mit dem Wert 4 \nals Parameter und dieser wird dann a3 zugewiesen."
 		          << std::endl; // Antwort
 	}
+}
+
+void trennstriche(){
+	std::cout << std::endl << "--------------------------------------------------" << std::endl;
+}
+
+int lab2AMain(){
+	a_1();
+	trennstriche();
+	a_2();
+	trennstriche();
+	a_3();
+	trennstriche();
+	a_4();
+	trennstriche();
+	a_5();
+	trennstriche();
+	a_6();
+	trennstriche();
+	a_Fragen();
 	return 0;
 }
 
@@ -72,7 +85,7 @@ int lab2AMain(){
 A::A(const int nummer) : _nptr(new int), _aptr{nullptr}{ // _aptr{new int[5]{}
 	// Nach ":" ist eine Initalisierungsliste
 	*_nptr = nummer;
-	for (auto i = 0; i < 5; i++) {
+	for (auto i{0}; i < 5; i++) {
 		_aptr[i] = new int{42};
 	}
 	std::cout << "class A constructor: " << *_nptr << std::endl;
@@ -92,19 +105,18 @@ A::~A() {
 	for (auto i = 0; i < 5; i++) {
 		delete _aptr[i];
 	}
-
 }
 
 // Copy
-A::A(const A &nummer) : _nptr(new int(*nummer._nptr)), _aptr{nullptr} {
-	for (auto i = 0; i < 5; i++) {
-		_aptr[i] = new int(*nummer._aptr[i]);
+A::A(A const &number) : _nptr(new int(*number._nptr)), _aptr{nullptr} {
+	for (auto i{0}; i < 5; i++) {
+		_aptr[i] = new int(*number._aptr[i]);
 	}
 	std::cout << "class A copy constructor: " << *_nptr << std::endl;
 }
 
 // Move
-A::A(A &&nummer) : _nptr(new int), _aptr{nullptr}  {
+A::A(A &&nummer) {
 	std::swap(nummer._nptr, _nptr);
 	std::swap(nummer._aptr, _aptr);
 	std::cout << "class A move constructor: " << *_nptr << std::endl;
@@ -114,7 +126,7 @@ A::A(A &&nummer) : _nptr(new int), _aptr{nullptr}  {
 A &A::operator=(const A &rhs) { // rhs = right-hand side
 	if (this != &rhs) {
 		*_nptr = *rhs._nptr; // flache Kopie
-		for (int i = 0; i < 5; i++) { // deep copy
+		for (auto i{0}; i < 5; i++) { // deep copy
 			_aptr[i] = rhs._aptr[i];
 		}
 	}

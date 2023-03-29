@@ -4,6 +4,7 @@
 #pragma once
 
 int lab2Main();
+int dish();
 
 
 #endif //PIC23_LABOR2_HPP

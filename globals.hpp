@@ -7,6 +7,7 @@
 #include <sstream>
 #include <array>
 #include <cstdlib>
+#include <random>
 
 const unsigned char AE = static_cast<unsigned char>(142);
 const unsigned char ae = static_cast<unsigned char>(132);
@@ -49,5 +50,7 @@ std::string lower(const std::string &str);
 std::string upper(const std::string &str);
 
 std::string strip(std::string &str);
+
+size_t randomNumber(size_t min, size_t max);
 
 #endif //PIC23_GLOBALS_HPP

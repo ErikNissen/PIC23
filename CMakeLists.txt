@@ -9,8 +9,8 @@ add_executable(PIC23
         globals.cpp
         Labor_1/dateiverwaltung.cpp
         Labor_2/labor2.cpp
-        Labor_2/Teil_A/lap2a.cpp
-        Labor_2/dishlib/dishlib.cpp
+        Labor_2/Teil_A/A.cpp
+        Labor_2/Customer.cpp
         )
 
 #Lab2 Teil B Aufgabe 1

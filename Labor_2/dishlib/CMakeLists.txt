@@ -1,6 +1,9 @@
 add_library(
         dishlib
-        dishlib.cpp
+        AbstractDish.cpp
+        VegetableSoup.cpp
+        PizzaMargherita.cpp
+        DishFactory.cpp
 )
 
 target_include_directories(
