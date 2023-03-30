@@ -1,9 +1,10 @@
 #include <iostream>
 #include <vector>
 #include <array>
+#include <filesystem>
 #include <cmath>
 #include <ctime>
-#include <filesystem>
+#include <conio.h>
 #include "labor1.hpp"
 #include "../globals.hpp"
 #include "dateiverwaltung.hpp"
@@ -23,23 +24,23 @@ jahr
 // Aufgabe 13
 static Person berechneAlter(Person &p) {
 	// Wandle Geburtstagsdatum in time_point um.
-	auto geburtszeitpunkt{std::chrono::system_clock::from_time_t(
+	const auto geburtszeitpunkt{std::chrono::system_clock::from_time_t(
 			std::mktime(&p.geburtsdatum))};
 
 	// Hole das heutige Datum & Uhrzeit
-	auto jetzt{std::chrono::system_clock::now()};
+	const auto jetzt{std::chrono::system_clock::now()};
 
 	// Bilde die Differenz von jetzt & geburtszeitpunkt
-	auto age{std::chrono::duration_cast<std::chrono::hours>
+	const auto age{std::chrono::duration_cast<std::chrono::hours>
 	(jetzt - geburtszeitpunkt).count()};
 
 	std::cout << "Berechne das Alter von Person: '" << p.vorname << " " <<
 	p.nachname << "' in Jahren, Tagen und Stunden: " << std::endl;
 
 	// Splitte age in Jahren, Tagen & Stunden auf.
-	auto jahre{age / 8766l};
-	auto tage{(age % 8766l) / 24l};
-	auto stunden{age % 24l};
+	const auto jahre{age / 8766l};
+	const auto tage{(age % 8766l) / 24l};
+	const auto stunden{age % 24l};
 
 	p.alter = {jahre, tage, stunden};
 
@@ -51,7 +52,7 @@ static Person berechneAlter(Person &p) {
 }
 
 // Aufgabe 14
-static void alter2Textform(Person &p) {
+static const void alter2Textform(const Person &p) {
 	std::cout << "\nAufgabe 14" << std::endl;
 
 	const auto alter{p.alter.jahre};
@@ -84,8 +85,8 @@ static void alter2Textform(Person &p) {
 	}else if(alter < 20){
 		text = teens[alter - 10];
 	}else if (alter < 100){
-		auto z{alter/10};
-		auto e{alter%10};
+		const auto z{alter/10};
+		const auto e{alter%10};
 		if(e > 0){
 			if(e == 1){
 				// Entfehrne das 's' von "Eins"
@@ -156,13 +157,18 @@ static int fibonacci(int n) { // Aufgabe 3
 }
 
 int labor1(std::vector<std::string> &vecArgs) {
-    aufgabe_1(vecArgs);
 	static const auto zahl{aufgabe_2(vecArgs)};
+	getch();
 	aufgabe_3( vecArgs );
+	getch();
 	aufgabe_4(zahl);
+	getch();
 	aufgabe_5(zahl);
+	getch();
 	aufgabe_6(vecArgs, 0);
+	getch();
     aufgabe_9();
+	getch();
 
 	std::string personendaten;
 	for(const auto& arg: vecArgs){
@@ -176,7 +182,7 @@ int labor1(std::vector<std::string> &vecArgs) {
     return 0;
 }
 
-static void fragen(){
+static const void fragen(){
 	using namespace std;
 
 	cout << GREEN << BOLD << endl << endl
@@ -191,7 +197,7 @@ static void fragen(){
 		 << endl
 		 << "- Wenn man gr"<<oe<<ss<<"ere Objekte "<<ue<<"bertragen will."
 		 << endl << RESET;
-
+	getch();
 	cout << GREEN << BOLD << endl << endl
 		 << "Frage 2: "
 	     << "Wann setze ich Referenzen ein?"
@@ -201,7 +207,7 @@ static void fragen(){
 	     << endl
 	     << "- Verwendung als Aliasname f"<<ue<<"r ein bereits bestehendes Objekt."
 	     << endl << RESET;
-
+	getch();
 	cout << GREEN << BOLD << endl << endl
 		 << "Frage 3: "
 	     << "Was ist der Unterschied zwischen Pointern und Referenzen?"
@@ -220,7 +226,7 @@ static void fragen(){
 	     << "ein Pointer hat eine eigene Speicheradresse und eine Referenz hat "
 			"keine, da es eine vorhandene Variable ist."
 	     << endl << RESET;
-
+	getch();
 	cout << GREEN << BOLD << endl << endl
 		 << "Frage 4: "
 	     << "Wozu setzt man \"const\" ein?"
@@ -231,7 +237,7 @@ static void fragen(){
 	     << "- Wenn eine Variable im nachgang nicht mehr ver"<<ae<<"ndert "
 			"werden soll."
 	     << endl << RESET;
-
+	getch();
 	cout << GREEN << BOLD << endl << endl
 		 << "Frage 5: "
 	     << "Was ist call-by-value und call-by-reference? Unterschiede und "
@@ -260,8 +266,7 @@ static void fragen(){
 		 << UE<<"bergeben einer \nKopie des Arguments zu teuer w"<<ae<<"re (z"
 			".B. bei gro"<<ss<<"en Datenstrukturen)."
 		 << endl << RESET;
-
-
+	getch();
 	cout << GREEN << BOLD << endl << endl
 		 << "Frage 6: "
 	     << "Eine Funktionsdeklaration beinhaltet einen Pointer als Argument, "
@@ -283,7 +288,7 @@ static void fragen(){
 	     << endl << RESET;
 }
 
-static void aufgabe_1(std::vector<std::string> &vecArgs) {
+static const void aufgabe_1(std::vector<std::string> &vecArgs) {
     // Aufgabe 1 Labor 1: alle argv Elemente im Vecotr werden mit cout
 	// ausgegeben.
     std::cout << "Aufgabe 1:\nDie Elemente im Vector sind: ";
@@ -308,9 +313,9 @@ static double aufgabe_2(std::vector<std::string> &vecArgs) {
 }
 
 // Aufgabe 3 - Weitere Funktionälitäten: Berechen Fibonachi
-static void aufgabe_3(std::vector<std::string> &vecArgs) {
+static const void aufgabe_3(std::vector<std::string> &vecArgs) {
 	std::cout << "\nAufgabe 3";
-	for (auto & vecArg : vecArgs) {
+	for (const auto & vecArg : vecArgs) {
 		try {
 			int x{stoi(vecArg)};
 			std::cout << std::endl << "Die Fibonacci-Zahl von " << x <<
@@ -324,7 +329,7 @@ static void aufgabe_3(std::vector<std::string> &vecArgs) {
 }
 
 // Mathematische Berechung
-static void aufgabe_4(double zahl){
+static const void aufgabe_4(double zahl){
 	double sinus;
 	std::cout << "\nAufgabe 4" << std::endl;
 	sinus = sin(zahl);
@@ -332,7 +337,7 @@ static void aufgabe_4(double zahl){
 }
 
 // Typumwandlung zu int
-static void aufgabe_5(double zahl){
+static const void aufgabe_5(double zahl){
 	int umgewandelt;
 	std::cout   << "\nAufgabe 5" << std::endl;
 	std::cout   << "Wandle zahl von Aufgabe 2 um in einen Integer, zahl "
@@ -346,7 +351,7 @@ static void aufgabe_5(double zahl){
 }
 
 // Ändern einer Ganzzahl im vector
-static void aufgabe_6(std::vector<std::string> &vecArgs, const int i){
+static const void aufgabe_6(std::vector<std::string> &vecArgs, const int i){
 	std::cout << "\nAufgabe 6" << std::endl;
 	std::cout << placeholder;
 	placeholder += 42;
@@ -355,6 +360,7 @@ static void aufgabe_6(std::vector<std::string> &vecArgs, const int i){
 	std::cout << "check vector vecArgs[i] = " << vecArgs[i] << std::endl;
 	if (vecArgs[i] == std::to_string(placeholder)){
 		std::cout << "Vector wurde erfolgreich bearbeitet!" << std::endl;
+		getch();
 		aufgabe_7();
 	}else{
 		std::cout << "Etwas ist schiefgelaufen!" << std::endl;
@@ -362,13 +368,13 @@ static void aufgabe_6(std::vector<std::string> &vecArgs, const int i){
 }
 
 // Gebe Ganzzahl in HEX an
-static void aufgabe_7(){
+static const void aufgabe_7(){
 	std::cout << "\nAufgabe 7" << std::endl;
 	std::cout << std::hex << placeholder << " (HEX), " << std::dec << std::endl;
 }
 
 // Erzeuge ein Vektor von Personen
-static void aufgabe_9() {
+static const void aufgabe_9() {
 	std::cout << "\nAufgabe 9" << std::endl;
 	static std::vector<Person> personen;
 	static Person p1{
@@ -382,19 +388,20 @@ static void aufgabe_9() {
 	<< "' wurde erfolgreich erstellt" << std::endl;
 
 	// Aufgabe 13
+	getch();
 	std::cout << "\nAufgabe 13" << std::endl;
 	p1 = berechneAlter(p1);
 	personen.emplace_back(p1);
 
 	// Aufgabe 15
+	getch();
 	for (auto &p: personen) {
 		std::cout << "\nAufgabenteil 15\nPerson" << std::endl;
 		// Aufgabe 14 / 16 / 17 / 18
 		alter2Textform(p);
 	}
 }
-
-static void aufgabe_10(std::string &path){
+static const void aufgabe_10(std::string &path){
 	std::cout << "\nAufgabe 10" << std::endl;
 	std::string content;
 	while(true) {

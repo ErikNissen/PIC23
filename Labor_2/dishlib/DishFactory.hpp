@@ -7,6 +7,7 @@
 #include <vector>
 #include <memory>
 #include <iostream>
+#include <conio.h>
 #include "../../globals.hpp"
 #include "AbstractDish.hpp"
 #include "PizzaMargherita.hpp"
@@ -20,7 +21,10 @@ namespace dishlib {
 			VegetableSoup,
 			PizzaMargherita
 		};
-		std::unique_ptr<AbstractDish> CreateDish(const DishType& dishType);
+		static std::unique_ptr<AbstractDish> CreateDish(const DishType& dishType);
+
+		DishFactory() = delete;
+		~DishFactory() = delete;
 	};
 
 } // dishlib

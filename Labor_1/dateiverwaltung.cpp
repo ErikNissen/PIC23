@@ -3,7 +3,7 @@
 #include "dateiverwaltung.hpp"
 
 // Aufgabe 10
-std::string read( const std::string& path ) {
+const std::string read( const std::string& path ) {
 	// Prüfe, ob Datei vorhanden ist.
 	if(!std::filesystem::exists(path)){
 		throw std::invalid_argument("Datei "+path+" nicht gefunden.");

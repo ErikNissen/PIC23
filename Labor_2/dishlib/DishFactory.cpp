@@ -3,7 +3,7 @@
 auto getInput(){
 	std::vector<std::tuple<std::string, unsigned int>> _zutaten;
 	std::cout << "Bitte geben Sie die Zutaten"
-				 " ein und beenden Sie mit dem Wort 'e e'\n(z.B.: 2 "
+				 " ein und beenden Sie mit Enter\n(z.B.: 2 "
 				 "Apfel, 3 "
 				 "Zwiebel)"
 				 << std::endl;
@@ -11,11 +11,19 @@ auto getInput(){
 	while ( running ){
 
 		std::cout << _zutaten.size() + 1 << ". ";
-		std::string zutat, anzahl;
 		while (true) {
-			std::cin >> anzahl >> zutat;
+			std::string input, zutat, anzahl;
+			std::cin.clear();
+			std::cin.sync();
+			std::getline(std::cin, input);
+			std::stringstream ss(input);
 
-			if(zutat == "e" or anzahl == "e"){
+			ss >> anzahl >> zutat;
+			ss.clear();
+			ss.sync();
+			input.clear();
+
+			if(zutat.empty()){
 				running = false;
 				break;
 			}
@@ -35,20 +43,23 @@ auto getInput(){
 	}
 
 	std::cout << "Bitte geben Sie die Zubereitungsschritte "
-	             " an und beenden Sie 'e'"
+	             " an und beenden Sie mit Enter"
 	          << std::endl;
 
 	std::vector<std::string> _schritte;
 	running = true;
 	while ( running ){
 		std::cout << _schritte.size() + 1 << ". ";
-		static std::string tmp;
-		std::cin >> std::ws >> tmp;
-		if(tmp == "e"){
+		static std::string input;
+		std::cin.clear();
+		std::cin.sync();
+		input.clear();
+		getline(std::cin, input, '\n');
+		if(input.empty()){
 			running = false;
 			break;
 		}else{
-			_schritte.emplace_back(tmp);
+			_schritte.emplace_back(input);
 		}
 	}
 
@@ -58,8 +69,10 @@ auto getInput(){
 namespace dishlib{
 	std::unique_ptr<AbstractDish>
 	 DishFactory::CreateDish(const DishFactory::DishType& dishType ) {
+		std::cout << std::endl << "Gericht: ";
 		switch ( dishType ) {
 			case DishType::PizzaMargherita: {
+				std::cout << "Pizza Margherita" << std::endl;
 				static auto tmp{ getInput() };
 
 				static PizzaMargherita p{ "Pizza Margherita" };
@@ -69,6 +82,7 @@ namespace dishlib{
 			}
 
 			case DishType::VegetableSoup:{
+				std::cout << "Suppe" << std::endl;
 				static auto tmp{ getInput() };
 
 				VegetableSoup v{"Suppe"};

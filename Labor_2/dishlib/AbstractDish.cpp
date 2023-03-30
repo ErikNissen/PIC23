@@ -7,15 +7,15 @@ namespace dishlib{
 		this->steps.emplace_back(tmp);
 	}
 
-	std::string AbstractDish::GetDishName() {
+	const std::string AbstractDish::GetDishName() {
 		return this->dishName;
 	}
 
-	zutatenliste AbstractDish::GetIngredients() {
+	const zutatenliste AbstractDish::GetIngredients() {
 		return this->vIngredients;
 	}
 
-	ull AbstractDish::GetNumberIngredients() {
+	const ull AbstractDish::GetNumberIngredients() {
 		return this->vIngredients.size();
 	}
 

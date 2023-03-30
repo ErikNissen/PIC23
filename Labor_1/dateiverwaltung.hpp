@@ -6,7 +6,7 @@
 #include <string>
 #include <fstream>
 
-std::string read( const std::string& path );
+const std::string read( const std::string& path );
 
 
 #endif //PIC23_DATEIVERWALTUNG_HPP

@@ -10,10 +10,15 @@ int lab2Main(){
 	static signed int choice{-1};
 
 	while (0 != choice ){
-		std::cout << "Welcher Teil der Labor Aufgaben sollen angezeigt werden?\n"
-		          << "0. Exit\n"
-		          << "1. Teil A\n"
-		          << "2. Teil B\n"
+		std::cout << std::endl
+				  << "Welcher Teil der Labor Aufgaben sollen angezeigt werden?"
+				  << std::endl
+		          << "0. Exit"
+				  << std::endl
+		          << "1. Teil A"
+				  << std::endl
+		          << "2. Teil B"
+				  << std::endl
 		          << "Eingabe: ";
 		std::cin >> std::ws >> choice;
 
@@ -37,28 +42,40 @@ int lab2Main(){
 
 int dish(){
 	/// Aufgabe 8
+	std::cout << std::endl << "Aufgabe 8" << std::endl;
 	using DishType = std::unique_ptr<dishlib::AbstractDish>;
 	using Gericht = dishlib::DishFactory::DishType;
 	using Kunde = std::unique_ptr<Customer>;
 
+	std::cout << "Erzeuge vDishes" <<std::endl;
 	std::vector<DishType> vDishes;
 
 	/// Aufgabe 9
-	dishlib::DishFactory df;
+	getch();
+	std::cout << std::endl << "Aufgabe 9" << std::endl;
+	using df = dishlib::DishFactory;
 	// erzeuge dishes
-	DishType gericht1{df.CreateDish(Gericht::PizzaMargherita)};
-	DishType gericht2{df.CreateDish(Gericht::VegetableSoup)};
+	std::cout << "Erzeuge Gerichte" << std::endl;
+	DishType gericht1{df::CreateDish(Gericht::PizzaMargherita)};
+	DishType gericht2{df::CreateDish(Gericht::VegetableSoup)};
 	// move in vektor
+	std::cout << "Verschiebe Gerichte in vDishes" << std::endl;
 	vDishes.emplace_back( std::move(gericht1));
 	vDishes.emplace_back( std::move(gericht2));
 
 	/// Aufgabe 10
+	getch();
+	std::cout << std::endl << "Aufgabe 10" << std::endl;
+	std::cout << "Sortiere Vektor nach Anzahl der Zutaten der Gerichte" <<
+	std::endl;
 	std::sort( vDishes.begin(), vDishes.end(), [](const DishType &a, const
 	DishType &b){ // sort mit Lambda Ausdruck []()
-		return a->GetNumberIngredients() < b->GetNumberIngredients();
+		return a->GetNumberIngredients() > b->GetNumberIngredients();
 	});
 
 	/// Aufgabe 11
+	getch();
+	std::cout << std::endl << "Aufgabe 11" << std::endl;
 	// Gib für jedes Gericht die Menge an Zutaten aus.
 	for(const auto &dish : vDishes){
 		std::cout << dish->GetDishName() << ": " <<
@@ -66,6 +83,9 @@ int dish(){
 	}
 
 	/// Aufgabe 12
+	getch();
+	std::cout << std::endl << "Aufgabe 12" << std::endl;
+	std::cout << "Erzeuge ein Vektor mit Kunden" << std::endl;
 	std::vector<Kunde> kunden; // Vektor für Kunden
 
 	std::array<std::string, 6> namen{ // Die Kunden für den Vektor
@@ -77,20 +97,26 @@ int dish(){
 		"Bertina Mueller"
 	};
 
+	std::cout << "Kunden: " << std::endl;
 	for(auto &name : namen){ // Füge Kundenliste den Vektor Hinzu
 		Kunde k{ std::move(std::make_unique<Customer>(name))};
 		kunden.emplace_back( std::move(k));
+		std::cout << name << std::endl;
 	}
 
 	/// Aufgabe 13
+	getch();
+	std::cout << std::endl << "Aufgabe 13" << std::endl;
 	for(auto &kunde : kunden){ // Jeder Kunde erhält ein dish
-		// Erzeuge ein zufälligen Index
-		ull index{ randomNumber(0, vDishes.size() - 1)};
-		if(index > vDishes.size() - 1){
-			std::cout << "Keine Gerichte mehr verfügbar." << std::endl;
+		if(vDishes.empty()){
+			std::cout << "Keine Gerichte mehr verf"<<ue<<"gbar." << std::endl;
 			break;
 		}
+		// Erzeuge ein zufälligen Index
+		ull index{ randomNumber(0, vDishes.size() - 1)};
 
+		std::cout << "Person " << kunde->getName() << " bekommt das Gericht "
+		<< vDishes[index]->GetDishName() << std::endl;
 		// Serviere das Gericht dem Kunden
 		kunde->ServeDish( std::move(vDishes[index]));
 
@@ -99,6 +125,9 @@ int dish(){
 	}
 
 	// Aufgabe 14
+	getch();
+	std::cout << std::endl << "Aufgabe 14" << std::endl;
+	std::cout << "Kunden verspeisen die Gerichte" << std::endl;
 	for(const auto &kunde : kunden){
 		kunde->EatDish(); // Kunde verspeist dish
 	}
