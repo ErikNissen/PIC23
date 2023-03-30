@@ -82,11 +82,11 @@ int lab2AMain(){
 }
 
 // Konstruktor
-A::A(const int nummer) : _nptr(new int), _aptr{nullptr}{ // _aptr{new int[5]{}
+A::A(const int nummer) : _nptr(new int), _aptr{new int[5]}{
 	// Nach ":" ist eine Initalisierungsliste
 	*_nptr = nummer;
 	for (auto i{0}; i < 5; i++) {
-		_aptr[i] = new int{42};
+		_aptr[i] = 42;
 	}
 	std::cout << "class A constructor: " << *_nptr << std::endl;
 }
@@ -102,15 +102,13 @@ A::~A() {
 
 	// clear heap
 	delete _nptr;
-	for (auto i = 0; i < 5; i++) {
-		delete _aptr[i];
-	}
+	delete [] _aptr;
 }
 
 // Copy
-A::A(A const &number) : _nptr(new int(*number._nptr)), _aptr{nullptr} {
+A::A(A const &number) : _nptr(new int(*number._nptr)), _aptr{new int[5]} {
 	for (auto i{0}; i < 5; i++) {
-		_aptr[i] = new int(*number._aptr[i]);
+		_aptr[i] = number._aptr[i];
 	}
 	std::cout << "class A copy constructor: " << *_nptr << std::endl;
 }

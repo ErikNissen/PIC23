@@ -5,25 +5,29 @@
 #include "Labor_2/labor2.hpp"
 
 int main(int argc, char *argv[]) {
-	int lab {-1};
-	while (lab != 0) {
+	while (true) {
 // Aufgabe 16 von Labor 1
-		std::cout << "Welche Labor Aufgaben sollen angezeigt werden?\n"
-		          << "0. Exit\n"
-		          << "1. Labor1\n"
-		          << "2. Labor2\n"
+		std::cout << "Welche Labor Aufgaben sollen angezeigt werden?"
+				  << std::endl
+		          << "0. Exit"
+				  << std::endl
+		          << "1. Labor1"
+				  << std::endl
+		          << "2. Labor2"
+				  << std::endl
 		          << "Eingabe: ";
+		int lab;
 		std::cin >> std::ws >> lab;
 
 // Switch
 		switch (lab) {
 			case 0:
-				std::cout << "Beende."<<std::endl; break;
+				std::cout << "Beende."<<std::endl; exit(0);
 			case 1: // Labor 1
 				// Aufgabe 1 - Vektor bekommt alle argv Elemente
 				static std::vector<std::string> vArgs;
 
-				for (int i{1}; i < argc; i++) {
+				for (auto i{1}; i < argc; i++) {
 					vArgs.emplace_back(argv[i]);
 				}
 
@@ -40,5 +44,4 @@ int main(int argc, char *argv[]) {
 				break;
 		}
 	}
-	return 0;
 }

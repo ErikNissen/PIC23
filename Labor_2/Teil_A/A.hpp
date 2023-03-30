@@ -35,9 +35,8 @@ public:
 	// Destruktor
 	~A(); // Teil 1
 private:
-	int* _nptr { nullptr }; // nullprt int
-	int* _aptr[5] { nullptr }; // nullptr int array
-//	int* _aptr { nullptr }; // nullptr int array
+	int* _nptr; // nullprt int
+	int* _aptr; // nullptr int array
 };
 
 

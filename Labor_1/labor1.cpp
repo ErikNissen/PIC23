@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <array>
-#include <filesystem>
 #include <cmath>
 #include <ctime>
 #include <conio.h>
@@ -157,6 +156,8 @@ static int fibonacci(int n) { // Aufgabe 3
 }
 
 int labor1(std::vector<std::string> &vecArgs) {
+	aufgabe_1(vecArgs);
+	getchar();
 	static const auto zahl{aufgabe_2(vecArgs)};
 	getch();
 	aufgabe_3( vecArgs );
@@ -401,6 +402,7 @@ static const void aufgabe_9() {
 		alter2Textform(p);
 	}
 }
+
 static const void aufgabe_10(std::string &path){
 	std::cout << "\nAufgabe 10" << std::endl;
 	std::string content;
