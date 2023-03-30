@@ -16,11 +16,20 @@ namespace dishlib{
 			this->AddIngredients(std::get<0>(zutat),
 			                     std::get<1>(zutat));
 		}
-
+		std::cout << this->GetDishName();
+		std::cout << std::endl;
+		std::cout << "Zutaten: " << std::endl;
+		for(const auto &zutat : this->GetIngredients()){
+			std::cout << std::get<1>(zutat) << "x " << std::get<0>(zutat)
+			          << std::endl;
+		}
+		std::cout << std::endl;
+		std::cout << "Bereite zu..." << std::endl;
 		for(const auto &schritt : this->steps){
-			std::cout   << std::get<1>(schritt) << ". "
-			            << std::get<0>(schritt)
-			            << std::endl;
+			std::cout << "Schritt ";
+			std::cout << std::get<0>(schritt) + 1 << ": "
+			          << std::get<1>(schritt)
+			          << std::endl;
 		}
 	}
 }

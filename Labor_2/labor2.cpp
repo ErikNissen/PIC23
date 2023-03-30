@@ -40,7 +40,7 @@ int lab2Main(){
     return 0;
 }
 
-int dish(){
+void dish(){
 	/// Aufgabe 8
 	std::cout << std::endl << "Aufgabe 8" << std::endl;
 	using DishType = std::unique_ptr<dishlib::AbstractDish>;
@@ -54,10 +54,12 @@ int dish(){
 	getch();
 	std::cout << std::endl << "Aufgabe 9" << std::endl;
 	using df = dishlib::DishFactory;
+
 	// erzeuge dishes
 	std::cout << "Erzeuge Gerichte" << std::endl;
 	DishType gericht1{df::CreateDish(Gericht::PizzaMargherita)};
 	DishType gericht2{df::CreateDish(Gericht::VegetableSoup)};
+
 	// move in vektor
 	std::cout << "Verschiebe Gerichte in vDishes" << std::endl;
 	vDishes.emplace_back( std::move(gericht1));
@@ -113,15 +115,15 @@ int dish(){
 			break;
 		}
 		// Erzeuge ein zufälligen Index
-		ull index{ randomNumber(0, vDishes.size() - 1)};
-
+		auto index{ randomNumber(0, vDishes.size() - 1)};
 		std::cout << "Person " << kunde->getName() << " bekommt das Gericht "
 		<< vDishes[index]->GetDishName() << std::endl;
+
 		// Serviere das Gericht dem Kunden
 		kunde->ServeDish( std::move(vDishes[index]));
 
 		// Lösche das Gericht aus dem Vektor
-		vDishes.erase(vDishes.begin() + index);
+		vDishes.erase(vDishes.begin() + static_cast<signed long long>(index));
 	}
 
 	// Aufgabe 14

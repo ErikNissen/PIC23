@@ -34,8 +34,7 @@ std::string strip(std::string &str){
 size_t randomNumber(size_t min, size_t max){
 	std::random_device rd;
 	std::mt19937 mt(rd());
-	std::uniform_real_distribution<double> dist(static_cast<double>(min),
-												static_cast<double>(max));
+	std::uniform_int_distribution<size_t> dist(min, max);
 
-	return round(dist(mt));
+	return dist(mt);
 }
