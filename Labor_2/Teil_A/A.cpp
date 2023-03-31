@@ -106,15 +106,16 @@ A::~A() {
 }
 
 // Copy
-A::A(A const &number) : _nptr(new int(*number._nptr)), _aptr{new int[5]} {
-	for (auto i{0}; i < 5; i++) {
+A::A(A const &number) : _nptr(new int), _aptr{new int[5]} {
+	*_nptr = *number._nptr; // flache Kopie
+    for (auto i{0}; i < 5; i++) { // tiefe Kopie
 		_aptr[i] = number._aptr[i];
 	}
 	std::cout << "class A copy constructor: " << *_nptr << std::endl;
 }
 
 // Move
-A::A(A &&nummer) {
+A::A(A &&nummer){
 	std::swap(nummer._nptr, _nptr);
 	std::swap(nummer._aptr, _aptr);
 	std::cout << "class A move constructor: " << *_nptr << std::endl;
@@ -124,7 +125,7 @@ A::A(A &&nummer) {
 A &A::operator=(const A &rhs) { // rhs = right-hand side
 	if (this != &rhs) {
 		*_nptr = *rhs._nptr; // flache Kopie
-		for (auto i{0}; i < 5; i++) { // deep copy
+		for (auto i{0}; i < 5; i++) { // tiefe copy
 			_aptr[i] = rhs._aptr[i];
 		}
 	}

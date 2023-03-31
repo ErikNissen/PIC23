@@ -41,3 +41,64 @@ private:
 
 
 #endif //PIC23_A_HPP
+
+/*
+ // Konstruktor
+A::A(const int nummer) : _nptr(new int), _aptr{new int[5]}{
+	// Nach ":" ist eine Initalisierungsliste
+	*_nptr = nummer;
+	for (auto i{0}; i < 5; i++) {
+		_aptr[i] = 42;
+	}
+	std::cout << "class A constructor: " << *_nptr << std::endl;
+}
+
+// Destruktor
+A::~A() {
+	if (nullptr == _nptr) {
+		std::cout << "class A destructor: nullptr" << std::endl;
+	}
+	if (nullptr != _nptr) {
+		std::cout << "class A destructor: " << *_nptr << std::endl;
+	}
+
+	// clear heap
+	delete _nptr;
+	delete [] _aptr;
+}
+
+// Copy
+A::A(A const &number) : _nptr(new int(*number._nptr)), _aptr{new int[5]} {
+	for (auto i{0}; i < 5; i++) {
+		_aptr[i] = number._aptr[i];
+	}
+	std::cout << "class A copy constructor: " << *_nptr << std::endl;
+}
+
+// Move
+A::A(A &&nummer) : _nptr(nummer._nptr) {
+	std::swap(nummer._nptr, _nptr);
+	std::swap(nummer._aptr, _aptr);
+	std::cout << "class A move constructor: " << *_nptr << std::endl;
+}
+
+// Copy assignment
+A &A::operator=(const A &rhs) { // rhs = right-hand side
+	if (this != &rhs) {
+		*_nptr = *rhs._nptr; // flache Kopie
+		for (auto i{0}; i < 5; i++) { // deep copy
+			_aptr[i] = rhs._aptr[i];
+		}
+	}
+	std::cout << "class A copy assignment operator: " << *rhs._nptr << std::endl;
+	return *this;
+}
+
+// Move assignment
+A &A::operator=(A &&nummer) {
+	std::swap(nummer._nptr, _nptr);
+	std::swap(nummer._aptr, _aptr);
+	std::cout << "class A move assignment operator: " << *_nptr << std::endl;
+}
+
+ */
