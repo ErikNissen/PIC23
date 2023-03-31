@@ -27,10 +27,10 @@ public:
 	A& operator=(A const &); // Teil 4
 
 	// Move
-	A(A &&); // Teil 3
+	A(A&& nummer) noexcept ; // Teil 3
 
 	// Move assignment
-	A& operator=(A &&); // Teil 5
+	A& operator=(A &&) noexcept ; // Teil 5
 
 	// Destruktor
 	~A(); // Teil 1

@@ -17,7 +17,7 @@ void a_2(){ // Teil 2
 void a_3(){ // Teil 3
 	std::cout << "\nTeil 3: " << std::endl;
 	std::vector<A> v;
-	v.emplace_back(A{5});
+	v.push_back(A{5});
 }
 void a_4(){ // Teil 4
 	std::cout << "\nTeil 4: " << std::endl;
@@ -31,10 +31,9 @@ void a_5(){ // Teil 5
 	a7 = A(10);
 }
 void a_6(){ // Teil 6
-	using namespace std;
 	std::cout << "\nTeil 6: " << std::endl;
 	A a8{11};
-	A a9{move(a8)};
+	A a9{std::move(a8)};
 }
 void a_Fragen(){ // Fragen beantworten
 	{
@@ -115,7 +114,7 @@ A::A(A const &number) : _nptr(new int), _aptr{new int[5]} {
 }
 
 // Move
-A::A(A &&nummer){
+A::A(A&& nummer) : _nptr{nullptr}, _aptr{nullptr} {
 	std::swap(nummer._nptr, _nptr);
 	std::swap(nummer._aptr, _aptr);
 	std::cout << "class A move constructor: " << *_nptr << std::endl;
