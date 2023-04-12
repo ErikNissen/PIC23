@@ -2,9 +2,9 @@
 
 auto getInput(){
 	std::vector<std::tuple<std::string, unsigned int>> _zutaten;
-	std::cout << "Bitte geben Sie die Zutaten"
-				 " ein und beenden Sie mit Enter\n(z.B.: 2 "
-				 "Apfel, 3 "
+	std::cout << "Bitte geben Sie pro Zeile eine Zutat"
+				 " an und beenden Sie mit Enter\n(z.B.:\n2 "
+				 "Apfel\n3 "
 				 "Zwiebel)"
 				 << std::endl;
 	bool running{true};
@@ -45,7 +45,7 @@ auto getInput(){
 		}
 	}
 
-	std::cout << "Bitte geben Sie die Zubereitungsschritte "
+	std::cout << "Bitte geben Sie pro Zeile ein Zubereitungsschritt"
 	             " an und beenden Sie mit Enter"
 	          << std::endl;
 
