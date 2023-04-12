@@ -9,9 +9,8 @@ auto getInput(){
 				 << std::endl;
 	bool running{true};
 	while ( running ){
-
-		std::cout << _zutaten.size() + 1 << ". ";
 		while (true) {
+			std::cout << _zutaten.size() + 1 << ". ";
 			std::string input, zutat, anzahl;
 			std::cin.clear();
 			std::cin.sync();
@@ -23,21 +22,25 @@ auto getInput(){
 			ss.sync();
 			input.clear();
 
-			if(zutat.empty()){
+			if(zutat.empty() && !_zutaten.empty()){
 				running = false;
 				break;
-			}
-			try {
-				std::stoi( anzahl );
-			} catch ( const std::exception &e ) {
-				std::cout << anzahl << " ist keine Zahl.";
-			}
-			try {
-				std::stoi(zutat);
-				std::cout << zutat << " ist keine Zutat.";
-			}catch ( const std::exception &e ){
-				_zutaten.emplace_back(zutat, stoi(anzahl));
-				break;
+			}else if(!zutat.empty()){
+				try {
+					std::stoi( anzahl );
+				} catch ( const std::exception &e ) {
+					std::cout << anzahl << " ist keine Zahl.";
+				}
+				try {
+					std::stoi(zutat);
+					std::cout << zutat << " ist keine Zutat.";
+				}catch ( const std::exception &e ){
+					_zutaten.emplace_back(zutat, stoi(anzahl));
+					break;
+				}
+			}else{
+				std::cout << "Gericht muss min. eine Zutat beinhalten."
+						  << std::endl;
 			}
 		}
 	}
@@ -47,19 +50,20 @@ auto getInput(){
 	          << std::endl;
 
 	std::vector<std::string> _schritte;
-	running = true;
-	while ( running ){
+	while ( true ){
 		std::cout << _schritte.size() + 1 << ". ";
 		static std::string input;
 		std::cin.clear();
 		std::cin.sync();
 		input.clear();
 		getline(std::cin, input, '\n');
-		if(input.empty()){
-			running = false;
+		if(input.empty() && !_schritte.empty()){
 			break;
-		}else{
+		}else if(!input.empty()){
 			_schritte.emplace_back(input);
+		}else if(input.empty() && _schritte.empty()){
+			std::cout << "Gericht muss min. ein Zubereitungsschritt "
+						 "beinhalten." << std::endl;
 		}
 	}
 
@@ -93,6 +97,25 @@ namespace dishlib{
 			default:
 				std::cerr << "Irgendetwas ist schief gelaufen!" << std::endl;
 				break;
+		}
+	}
+
+	void DishFactory::ListDishes() {
+		auto counter{1};
+		for(auto d{DishType::begin};
+			d < DishType::end;
+			d = static_cast<DishType>(static_cast<size_t>(d) + 1)){
+			std::cout << counter << ". ";
+			counter++;
+			switch ( d ) {
+				case DishType::VegetableSoup:
+					std::cout << "Suppe" << std::endl;
+					break;
+				case DishType::PizzaMargherita:
+					std::cout << "Pizza Margherita" << std::endl;
+				default:
+					break;
+			}
 		}
 	}
 }

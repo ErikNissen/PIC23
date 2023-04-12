@@ -19,14 +19,18 @@ namespace dishlib {
 	public:
 		enum class DishType{
 			VegetableSoup,
-			PizzaMargherita
+			PizzaMargherita,
+
+			// Für Iterationen
+			count,
+			begin = 0,
+			end = count
 		};
 		static std::unique_ptr<AbstractDish> CreateDish(const DishType& dishType);
-
+		static void ListDishes();
 		DishFactory() = delete;
 		~DishFactory() = delete;
 	};
-
 } // dishlib
 
 #endif //PIC23_DISHFACTORY_HPP

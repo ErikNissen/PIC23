@@ -114,7 +114,7 @@ A::A(A const &number) : _nptr(new int), _aptr{new int[5]} {
 }
 
 // Move
-A::A(A&& nummer) : _nptr{nullptr}, _aptr{nullptr} {
+A::A(A&& nummer) noexcept : _nptr{nullptr}, _aptr{nullptr} {
 	std::swap(nummer._nptr, _nptr);
 	std::swap(nummer._aptr, _aptr);
 	std::cout << "class A move constructor: " << *_nptr << std::endl;
@@ -133,7 +133,7 @@ A &A::operator=(const A &rhs) { // rhs = right-hand side
 }
 
 // Move assignment
-A &A::operator=(A &&nummer) {
+A &A::operator=(A &&nummer) noexcept {
 	std::swap(nummer._nptr, _nptr);
 	std::swap(nummer._aptr, _aptr);
 	std::cout << "class A move assignment operator: " << *_nptr << std::endl;

@@ -19,7 +19,7 @@ namespace dishlib {
 
 		VegetableSoup() = delete; // del def. konstr.
 
-		VegetableSoup(std::string _dishName);
+		VegetableSoup(std::string);
 	};
 
 } // dishlib

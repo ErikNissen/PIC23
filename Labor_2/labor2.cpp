@@ -75,6 +75,7 @@ void dish(){
 		return a->GetNumberIngredients() > b->GetNumberIngredients();
 	});
 
+
 	/// Aufgabe 11
 	getch();
 	std::cout << std::endl << "Aufgabe 11" << std::endl;
@@ -91,12 +92,12 @@ void dish(){
 	std::vector<Kunde> kunden; // Vektor für Kunden
 
 	std::array<std::string, 6> namen{ // Die Kunden für den Vektor
-		"Hannes Mueller",
-		"Anna Schneider",
-		"Herbert Mayer von Lichtenstein",
-		"Julia Wolf",
-		"Max Mustermann",
-		"Bertina Mueller"
+			"Hannes Mueller",
+			"Anna Schneider",
+			"Herbert Mayer von Lichtenstein",
+			"Julia Wolf",
+			"Max Mustermann",
+			"Bertina Mueller"
 	};
 
 	std::cout << "Kunden: " << std::endl;

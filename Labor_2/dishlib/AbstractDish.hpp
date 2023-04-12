@@ -20,18 +20,18 @@ namespace dishlib {
 		                     std::vector<std::string> &schritte) = 0; // "=
 							 // 0" gibt an das es pur-virtuall ist!
 
-		virtual const std::string GetDishName();
+		const std::string GetDishName();
 
-		virtual void AddStep(std::string &step);
+		void AddStep(std::string &step);
 
-		virtual const zutatenliste GetIngredients();
+		const zutatenliste GetIngredients();
 
-		virtual const ull GetNumberIngredients();
+		const ull GetNumberIngredients();
 
 		AbstractDish() = delete;
 
 		explicit AbstractDish(std::string &_dishName);
-		virtual ~AbstractDish() = default; // Virtuel da...
+		 ~AbstractDish() = default; // Virtuel da...
 
 	protected:
 		void AddIngredients(const std::string &zutat, const unsigned int &anzahl);
