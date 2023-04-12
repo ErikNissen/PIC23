@@ -18,9 +18,10 @@ namespace dishlib{
 	const ull AbstractDish::GetNumberIngredients() {
 		size_t counter{0};
 		for(const auto &i : this->vIngredients){
-			counter++;
 			if(get<1>(i) > 1){
 				counter += get<1>(i);
+			}else{
+				counter++;
 			}
 		}
 		return counter;
